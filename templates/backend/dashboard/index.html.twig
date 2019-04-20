@@ -83,10 +83,11 @@
         <div class="col-12 col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Empresas preferidas</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">As minhas empresas</h6>
                 </div>
                 <div class="card-body">
-                    {% embed 'backend/component/pagination/record_details.html.twig' with {paginator: popularCompanies} %}{% endembed %}
+                    {% if myCompanies is not empty %}
+                    {% embed 'backend/component/pagination/record_details.html.twig' with {paginator: myCompanies} %}{% endembed %}
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -94,7 +95,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for company in popularCompanies %}
+                            {% for company in myCompanies %}
                                 <tr>
                                     <td>
                                         {% embed 'backend/component/identifier/company.html.twig'
@@ -104,7 +105,10 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    {% embed 'backend/component/pagination/pagination.html.twig' with {paginator: popularCompanies} %}{% endembed %}
+                    {% embed 'backend/component/pagination/pagination.html.twig' with {paginator: myCompanies} %}{% endembed %}
+                    {% else %}
+                        <h6 class="text-center"><a href="{{ path('backend_company_managed_company_new') }}">Crie a sua primeira empresa!</a></h6>
+                    {% endif %}
                 </div>
             </div>
         </div>

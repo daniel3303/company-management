@@ -2,10 +2,13 @@
 
 namespace App\Controller\Backend\Company;
 
+use App\Controller\Backend\BaseController;
 use App\Entity\Company\Company;
 use App\Entity\User;
 use App\Form\Company\CompanyType;
 use App\Repository\Company\CompanyRepository;
+use Doctrine\ORM\Query\Expr\Base;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,13 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/backend/company/all")
  */
-class CompanyController extends AbstractController {
+class CompanyController extends BaseController {
     /**
      * @Route("/", name="backend_company_company_index", methods={"GET"})
      */
-    public function index(CompanyRepository $companyRepository): Response {
+    public function index(CompanyRepository $companyRepository, Request $request): Response {
+        /** @var $companies Company[]|Pagerfanta */
+        $companies = $this->paginate($companyRepository->findAllOrderedBy("name")->getQuery(), $request);
         return $this->render('backend/company/company/index.html.twig', [
-            'companies' => $companyRepository->findAllOrderedBy("name"),
+            'companies' => $companies,
         ]);
     }
 

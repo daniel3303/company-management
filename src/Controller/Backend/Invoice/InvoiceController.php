@@ -2,9 +2,12 @@
 
 namespace App\Controller\Backend\Invoice;
 
+use App\Controller\Backend\BaseController;
 use App\Entity\Invoice\Invoice;
 use App\Form\Invoice\InvoiceType;
 use App\Repository\Invoice\InvoiceRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,13 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/backend/invoice")
  */
-class InvoiceController extends AbstractController {
+class InvoiceController extends BaseController {
     /**
      * @Route("/", name="backend_invoice_invoice_index", methods={"GET"})
      */
-    public function index(InvoiceRepository $invoiceRepository): Response {
+    public function index(InvoiceRepository $invoiceRepository, Request $request): Response {
+        $invoices = $invoiceRepository->findAllQuery();
+        $invoices = $this->paginate($invoices, $request);
+        /** @var $invoices Invoice[]|Pagerfanta */
+
         return $this->render('backend/invoice/invoice/index.html.twig', [
-            'invoices' => $invoiceRepository->findAll(),
+            'invoices' => $invoices
         ]);
     }
 

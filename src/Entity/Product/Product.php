@@ -6,6 +6,7 @@ use App\Entity\Company\Company;
 use App\Entity\Invoice\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
@@ -44,6 +45,17 @@ class Product {
      * @Serializer\Exclude()
      */
     private $invoiceItems;
+
+    /**
+     * @ORM\Column(type="string", length=256, nullable=true)
+     */
+    private $unit;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product\Category", inversedBy="products")
+     * @Assert\NotNull(message="Selecione uma categoria.")
+     */
+    private $category;
 
     public function __construct()
     {
@@ -136,4 +148,76 @@ class Product {
 
         return $companies;
     }
+
+    public function getLowestPriceItem() : ?Item{
+        /** @var $best Item|null */
+        $best = null;
+        foreach ($this->getInvoiceItems() as $item){
+            if($best === null || $best->getPricePerUnit() > $item->getPricePerUnit()){
+                $best = $item;
+            }
+        }
+
+        return $best;
+    }
+
+    public function getHighestPriceItem() : ?Item{
+        /** @var $best Item|null */
+        $best = null;
+        foreach ($this->getInvoiceItems() as $item){
+            if($best === null || $best->getPricePerUnit() < $item->getPricePerUnit()){
+                $best = $item;
+            }
+        }
+
+        return $best;
+    }
+
+    public function getTotalQuantitySold() : float{
+        $total = 0.0;
+        foreach ($this->getInvoiceItems() as $item){
+            $total += $item->getQuantity();
+        }
+        return $total;
+    }
+
+    public function getTotalPrice() : float{
+        $total = 0.0;
+        foreach ($this->getInvoiceItems() as $item){
+            $total += $item->getTotal();
+        }
+        return $total;
+    }
+
+    public function getAveragePrice() : float {
+        if($this->getTotalQuantitySold() == 0){
+            return 0;
+        }
+        return $this->getTotalPrice() / $this->getTotalQuantitySold();
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?string $unit): self
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
 }

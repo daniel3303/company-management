@@ -1,5 +1,9 @@
 <span class="company">
     <a href="{{ path('backend_product_product_show', {id: product.id}) }}">
-        <i class="fas fa-shopping-basket"></i> {{ product.name }}
+        <i class="fas fa-shopping-basket"></i>
+        {% if product.category is not null %}
+            {{ product.category.name }} >
+        {% endif %}
+        {{ product.name }}
     </a>
 </span>

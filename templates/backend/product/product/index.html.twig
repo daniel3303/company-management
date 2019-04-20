@@ -11,11 +11,13 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        {% embed 'backend/component/pagination/record_details.html.twig' with {paginator: products} %}{% endembed %}
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Nome</th>
-                                    <th>Descrição</th>
+                                    <th>Preço Mínimo</th>
+                                    <th>Preço Máximo</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -23,8 +25,25 @@
                                 {% for product in products %}
                                     <tr>
                                         <td>{% embed 'backend/component/identifier/product.html.twig'
-                                            with {product: product} %}{% endembed %}</td>
-                                        <td>{{ product.description }}</td>
+                                                with {product: product} %}{% endembed %}</td>
+                                        <td>
+                                            {% if product.lowestPriceItem != null %}
+                                                {{ product.lowestPriceItem.pricePerUnit|number_format(2, '.', ',') }}€ |
+                                                {% embed 'backend/component/identifier/invoice.html.twig'
+                                                    with {invoice: product.lowestPriceItem.invoice } %}{% endembed %}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if product.highestPriceItem != null %}
+                                                {{ product.highestPriceItem.pricePerUnit|number_format(2, '.', ',') }}€ |
+                                                {% embed 'backend/component/identifier/invoice.html.twig'
+                                                    with {invoice: product.highestPriceItem.invoice } %}{% endembed %}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             <a href="{{ path('backend_product_product_edit', {'id': product.id}) }}"
                                                class="btn btn-info btn-icon-split">
@@ -45,11 +64,13 @@
                             <tfoot>
                                 <tr>
                                     <th>Nome</th>
-                                    <th>Descrição</th>
+                                    <th>Preço Mínimo</th>
+                                    <th>Preço Máximo</th>
                                     <th>Ações</th>
                                 </tr>
                             </tfoot>
                         </table>
+                        {% embed 'backend/component/pagination/pagination.html.twig' with {paginator: products} %}{% endembed %}
                     </div>
 
                     <a href="{{ path('backend_product_product_new') }}"

@@ -2,26 +2,27 @@
 
 namespace App\Controller\Backend\Product;
 
+use App\Controller\Backend\BaseController;
 use App\Entity\Product\Product;
 use App\Form\Product\ProductType;
 use App\Repository\Product\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/product/product")
+ * @Route("/backend/product/product")
  */
-class ProductController extends AbstractController
+class ProductController extends BaseController
 {
     /**
      * @Route("/", name="backend_product_product_index", methods={"GET"})
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, Request $request): Response
     {
+        $products = $this->paginate($productRepository->findAllOrderedBy("name")->getQuery(), $request);
         return $this->render('backend/product/product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $products,
         ]);
     }
 

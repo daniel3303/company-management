@@ -10,6 +10,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Listagem de faturas</h6>
                 </div>
                 <div class="card-body">
+                    {% embed 'backend/component/pagination/record_details.html.twig' with {paginator: invoices} %}{% endembed %}
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
@@ -34,7 +35,7 @@
                                         <td>{% embed 'backend/component/identifier/company.html.twig'
                                                 with {company: invoice.client} %}{% endembed %}</td>
                                         <td>{{ invoice.total|number_format(2, ".", ".") }}€</td>
-                                        <td>{{ invoice.paid ?
+                                        <td>{{ invoice.paid  ?
                                             '<span class="badge badge-success">Sim</span>'
                                             : '<span class="badge badge-danger">Não</span>' }}
                                         </td>
@@ -67,6 +68,7 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        {% embed 'backend/component/pagination/pagination.html.twig' with {paginator: invoices} %}{% endembed %}
                     </div>
                 </div>
 

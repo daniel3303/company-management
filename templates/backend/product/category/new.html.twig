@@ -1,0 +1,25 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}Criar nova categoria{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Criar nova categoria</h6>
+                </div>
+                <div class="card-body">
+                    {{ include('backend/product/category/_form.html.twig') }}
+                    <hr />
+                    <a href="{{ path('backend_product_category_index') }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar à lista</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

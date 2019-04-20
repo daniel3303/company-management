@@ -14,8 +14,21 @@
                     <div class="row">
                         <div class="col-12">
                             <p>
-                                <strong>Nome:</strong> {{ product.name }}<br />
-                                <strong>Descrição:</strong> {{ product.description }}
+                                <strong>Nome: </strong> {{ product.name }}<br />
+                                {% if product.category is not null %}
+                                    <strong>Categoria: </strong> {% embed 'backend/component/identifier/category.html.twig' with {category: product.category} %}{% endembed %}<br />
+                                {% endif %}
+                                <strong>Descrição: </strong> {{ product.description }}<br />
+                                {% if product.lowestPriceItem != null %}
+                                    <strong>Preço mínimo de venda: </strong> {{ product.lowestPriceItem.pricePerUnit|number_format(2, ',', '.') }}€<br />
+                                {% endif %}
+                                {% if product.highestPriceItem != null %}
+                                    <strong>Preço máximo de venda: </strong> {{ product.highestPriceItem.pricePerUnit|number_format(2, ',', '.') }}€<br />
+                                {% endif %}
+                                <strong>Preço médio de venda: </strong> {{ product.averagePrice|number_format(2, ',', '.') }}€<br />
+                                <strong>Valor total transacionado: </strong> {{ product.totalPrice|number_format(2, ',', '.') }}€<br />
+                                <strong>Quantidade total transacionada: </strong> {{ product.totalQuantitySold|number_format(2, ',', '.') }}{{ product.unit }}<br />
+
                             </p>
                         </div>
                     </div>

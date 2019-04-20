@@ -174,6 +174,16 @@ class Invoice {
         return $this;
     }
 
+    public function getSubTotal() : float {
+        $items = $this->getItems();
+        $total = 0;
+        foreach($items as $item){
+            $total += $item->getSubTotal();
+        }
+
+        return $total;
+    }
+
     public function getTotal(): float {
         $items = $this->getItems();
         $total = 0;
@@ -203,5 +213,25 @@ class Invoice {
     public function getMissingToPay(){
         $missing = $this->getTotal()-$this->getTotalPaid();
         return max($missing, 0);
+    }
+
+    public function getTotalQuantity() : float {
+        $items = $this->getItems();
+        $total = 0;
+        foreach($items as $item){
+            $total += $item->getQuantity();
+        }
+
+        return $total;
+    }
+
+    public function getTotalWaste() : float {
+        $items = $this->getItems();
+        $total = 0;
+        foreach($items as $item){
+            $total += $item->getWaste();
+        }
+
+        return $total;
     }
 }

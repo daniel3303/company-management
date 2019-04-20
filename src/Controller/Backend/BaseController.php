@@ -9,14 +9,19 @@
 namespace App\Controller\Backend;
 
 
-use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\ORM\Query;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class BaseController extends AbstractController {
-    public function configurePaginator(PaginationInterface $paginator, Request $request, string $name = "paginator") : PaginationInterface{
-        $paginator->setCurrentPageNumber($request->query->get($name."-page"));
-        $paginator->setItemNumberPerPage(10);
-        return $paginator;
+    protected function paginate(Query $query, Request $request, string $name = "") : Pagerfanta{
+        $pager = new Pagerfanta(new DoctrineORMAdapter($query));
+        $pager->setAllowOutOfRangePages(true);
+        $pager->setCurrentPage($request->query->getInt($name."page", 1));
+        $pager->setMaxPerPage($request->query->getInt($name."per-page", 10));
+
+        return $pager;
     }
 }

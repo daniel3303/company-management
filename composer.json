@@ -7,8 +7,8 @@
         "ext-iconv": "*",
         "ext-json": "^1.6",
         "beberlei/DoctrineExtensions": "^1.1",
+        "fzaninotto/faker": "^1.8",
         "jms/serializer-bundle": "^3.0",
-        "knplabs/knp-paginator-bundle": "^3.0",
         "moontoast/math": "^1.1",
         "nelmio/cors-bundle": "^1.5",
         "ramsey/uuid": "^3.8",
@@ -31,7 +31,8 @@
         "symfony/twig-bundle": "4.2.*",
         "symfony/validator": "4.2.*",
         "symfony/web-link": "4.2.*",
-        "symfony/yaml": "4.2.*"
+        "symfony/yaml": "4.2.*",
+        "white-october/pagerfanta-bundle": "^1.2"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

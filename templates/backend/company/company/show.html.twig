@@ -1,13 +1,15 @@
 {% extends 'backend/master.html.twig' %}
 
-{% block title %}Empresa #{{ company.name }}{% endblock %}
+{% block title %}Empresa {{ company.name }}{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Empresa #{{ company.name }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Empresa
+                        {% embed 'backend/component/identifier/company.html.twig' with {company: company} %}{% endembed %}
+                    </h6>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -81,7 +83,6 @@
                                         <th>Data</th>
                                         <th>Valor</th>
                                         <th>Pago</th>
-                                        <th>Por pagar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,9 +93,11 @@
                                             <td>{% embed 'backend/component/identifier/company.html.twig'
                                                     with {company:invoice.issuer} %}{% endembed %}</td>
                                             <td>{{ invoice.date|date("d/m/Y") }}</td>
-                                            <td>{{ invoice.total|number_format(2, '.', ',') }}€</td>
-                                            <td>{{ invoice.totalPaid|number_format(2, '.', ',') }}€</td>
-                                            <td>{{ invoice.missingToPay|number_format(2, '.', ',') }}€</td>
+                                            <td>{{ invoice.total|number_format(2, ',', '.') }}€</td>
+                                            <td>{{ invoice.paid  ?
+                                                '<span class="badge badge-success">Sim</span>'
+                                                : '<span class="badge badge-danger">Não</span>' }}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -108,11 +111,10 @@
                                 <thead>
                                     <tr>
                                         <th>Número</th>
-                                        <th>Emissor</th>
+                                        <th>Cliente</th>
                                         <th>Data</th>
                                         <th>Valor</th>
                                         <th>Pago</th>
-                                        <th>Por pagar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -121,11 +123,13 @@
                                             <td>{% embed 'backend/component/identifier/invoice.html.twig'
                                                     with {invoice:invoice} %}{% endembed %}</td>
                                             <td>{% embed 'backend/component/identifier/company.html.twig'
-                                                with {company:invoice.issuer} %}{% endembed %}</td>
+                                                with {company:invoice.client} %}{% endembed %}</td>
                                             <td>{{ invoice.date|date("d/m/Y") }}</td>
                                             <td>{{ invoice.total|number_format(2, '.', ',') }}€</td>
-                                            <td>{{ invoice.totalPaid|number_format(2, '.', ',') }}€</td>
-                                            <td>{{ invoice.missingToPay|number_format(2, '.', ',') }}€</td>
+                                            <td>{{ invoice.paid  ?
+                                                '<span class="badge badge-success">Sim</span>'
+                                                : '<span class="badge badge-danger">Não</span>' }}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

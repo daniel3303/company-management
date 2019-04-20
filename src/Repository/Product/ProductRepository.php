@@ -5,6 +5,7 @@ namespace App\Repository\Product;
 use App\Entity\Product\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -28,6 +29,17 @@ class ProductRepository extends ServiceEntityRepository {
             return 0;
         }
         return $count === null ? 0 : $count;
+    }
+
+    /**
+     * @param string $property
+     * @param string $order
+     * @return Product[]|Paginator
+     */
+    public function findAllOrderedBy(string $property = "id", string $order = "asc") : Paginator{
+        return new Paginator($this->createQueryBuilder("p")
+            ->select("p")
+            ->orderBy("p.".$property, $order));
     }
 
 

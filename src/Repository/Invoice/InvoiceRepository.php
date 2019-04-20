@@ -19,6 +19,10 @@ class InvoiceRepository extends ServiceEntityRepository {
         parent::__construct($registry, Invoice::class);
     }
 
+    public function findAllQuery(){
+        return $this->createQueryBuilder("i")->select("i")->getQuery();
+    }
+
     public function countAllInvoices() : int {
         try {
             $count = $this->createQueryBuilder("i")

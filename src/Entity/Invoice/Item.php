@@ -52,8 +52,12 @@ class Item {
     private $waste;
 
 
-    public function getTotal(): float {
+    public function getSubTotal(): float {
         return $this->getPricePerUnit() * $this->getQuantity();
+    }
+
+    public function getTotal() : float {
+        return $this->getPricePerUnit() * ($this->getQuantity() -  $this->getWaste());
     }
 
     public function getId(): ?int {

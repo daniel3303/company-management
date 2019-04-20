@@ -1,0 +1,56 @@
+{% extends 'backend/master.html.twig' %}
+{% block title %}Listagem de categorias{% endblock %}
+{% block contentTitle %}Listagem de categorias{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Listagem de categorias</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        {% embed 'backend/component/pagination/record_details.html.twig' with {paginator: categories} %}{% endembed %}
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for category in categories %}
+                                    <tr>
+                                        <td>{% embed 'backend/component/identifier/category.html.twig'
+                                                with {category: category} %}{% endembed %}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5">Não foram encontrados resultados</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Nome</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        {% embed 'backend/component/pagination/pagination.html.twig' with {paginator: categories} %}{% endembed %}
+                    </div>
+
+                    <a href="{{ path('backend_product_category_new') }}"
+                       class="btn btn-success btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-plus"></i>
+                        </span>
+                        <span class="text">Criar nova</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

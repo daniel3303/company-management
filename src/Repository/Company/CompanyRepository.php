@@ -31,12 +31,6 @@ class CompanyRepository extends ServiceEntityRepository {
             ->orderBy("c.".$property, $order));
     }
 
-    public function findAllOrderedByNumberInvoices(){
-        return new Paginator($this->createQueryBuilder('c')
-        ->select('c, (COUNT(ii) + COUNT(ri)) as HIDDEN totalInvoices')->leftJoin('c.issuedInvoices', ' ii')
-        ->leftJoin('c.receivedInvoices','ri')->orderBy('totalInvoices', 'ASC'));
-    }
-
     public function countAllCompanies(User $user) : int {
         try {
             $count = $this->createQueryBuilder("c")
