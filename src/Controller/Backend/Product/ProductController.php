@@ -72,6 +72,15 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/show", name="backend_product_product_show", methods={"GET"})
+     */
+    public function show(Request $request, Product $product): Response {
+        return $this->render('backend/product/product/show.html.twig', [
+            'product' => $product,
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="backend_product_product_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Product $product): Response

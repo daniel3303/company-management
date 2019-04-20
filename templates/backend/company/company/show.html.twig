@@ -1,0 +1,147 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}Empresa #{{ company.name }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Empresa #{{ company.name }}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Nome da empresa: </strong>{{ company.name }}<br />
+                                <strong>Nif: </strong>{{ company.nif }}<br />
+                                <strong>Morada: </strong>{{ company.address }}<br />
+                                <strong>Criado por: </strong>{{ company.user.name }}<br />
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <h3>Clientes</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Nif</th>
+                                        <th>Morada</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for company in company.getClientCompanies() %}
+                                        <tr>
+                                            <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                    with {company:company} %}{% endembed %}</td>
+                                            <td>{{ company.nif }}</td>
+                                            <td>{{ company.address }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div><!-- col -->
+
+                        <div class="col-12 col-md-6">
+                            <h3>Fornecedores</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Nif</th>
+                                        <th>Morada</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for company in company.getSupplierCompanies() %}
+                                        <tr>
+                                            <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                    with {company:company} %}{% endembed %}</td>
+                                            <td>{{ company.nif }}</td>
+                                            <td>{{ company.address }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div><!-- col -->
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <h3>Faturas recebidas</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Número</th>
+                                        <th>Emissor</th>
+                                        <th>Data</th>
+                                        <th>Valor</th>
+                                        <th>Pago</th>
+                                        <th>Por pagar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for invoice in company.receivedInvoices %}
+                                        <tr>
+                                            <td>{% embed 'backend/component/identifier/invoice.html.twig'
+                                                    with {invoice:invoice} %}{% endembed %}</td>
+                                            <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                    with {company:invoice.issuer} %}{% endembed %}</td>
+                                            <td>{{ invoice.date|date("d/m/Y") }}</td>
+                                            <td>{{ invoice.total|number_format(2, '.', ',') }}€</td>
+                                            <td>{{ invoice.totalPaid|number_format(2, '.', ',') }}€</td>
+                                            <td>{{ invoice.missingToPay|number_format(2, '.', ',') }}€</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div><!-- col -->
+
+
+                        <div class="col-12 col-md-6">
+                            <h3>Faturas emitidas</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Número</th>
+                                        <th>Emissor</th>
+                                        <th>Data</th>
+                                        <th>Valor</th>
+                                        <th>Pago</th>
+                                        <th>Por pagar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for invoice in company.issuedInvoices %}
+                                        <tr>
+                                            <td>{% embed 'backend/component/identifier/invoice.html.twig'
+                                                    with {invoice:invoice} %}{% endembed %}</td>
+                                            <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                with {company:invoice.issuer} %}{% endembed %}</td>
+                                            <td>{{ invoice.date|date("d/m/Y") }}</td>
+                                            <td>{{ invoice.total|number_format(2, '.', ',') }}€</td>
+                                            <td>{{ invoice.totalPaid|number_format(2, '.', ',') }}€</td>
+                                            <td>{{ invoice.missingToPay|number_format(2, '.', ',') }}€</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div><!-- col -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('backend_invoice_invoice_index') }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar à lista</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

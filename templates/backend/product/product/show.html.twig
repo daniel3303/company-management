@@ -1,0 +1,74 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}Detalhes do produto: {{ product.name }}{% endblock %}
+{% block contentTitle %}Detalhes do produto: {{ product.name }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Detalhes do produto: {{ product.name}}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Nome:</strong> {{ product.name }}<br />
+                                <strong>Descrição:</strong> {{ product.description }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <h3>Empresas que já compraram</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Empresa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for company in product.buyingCompanies %}
+                                        <tr>
+                                            <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                    with {company: company} %}{% endembed %}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div><!-- col -->
+
+
+                        <div class="col-12 col-md-6">
+                            <h3>Empresas que já venderam</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Empresa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for company in product.sellingCompanies %}
+                                        <tr>
+                                            <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                    with {company: company} %}{% endembed %}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div><!-- col -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('backend_product_product_index') }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar à lista</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

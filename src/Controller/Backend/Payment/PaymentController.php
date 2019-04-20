@@ -27,28 +27,6 @@ class PaymentController extends AbstractController
 
 
     /**
-     * @Route("/{id}/edit", name="backend_payment_payment_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Payment $payment): Response
-    {
-        $form = $this->createForm(PaymentType::class, $payment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('backend_payment_payment_index', [
-                'id' => $payment->getId(),
-            ]);
-        }
-
-        return $this->render('backend/payment/payment/edit.html.twig', [
-            'payment' => $payment,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="backend_payment_payment_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Payment $payment): Response

@@ -9,10 +9,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Invoice\InvoiceRepository")
+ * @UniqueEntity(
+ *     fields={"number", "issuer"},
+ *     message="Já existe uma fatura com este número de sequência emitida por esta empresa.",
+ *     errorPath="number",
+ * )
  */
 class Invoice {
     /**
@@ -39,22 +45,27 @@ class Invoice {
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company\Company", inversedBy="issuedInvoices")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotIdenticalTo(propertyPath="issuer", message="O cliente e o emissor não podem ser a mesma empresa.")
      */
     private $issuer;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company\Company", inversedBy="receivedInvoices")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotIdenticalTo(propertyPath="issuer", message="O cliente e o emissor não podem ser a mesma empresa.")
      */
     private $client;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Invoice\Item", mappedBy="invoice", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OrderBy({"quantity" = "asc"})
+     * @Assert\Valid()
      */
     private $items;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Payment\Payment", mappedBy="invoice", orphanRemoval=true, cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $payments;
 

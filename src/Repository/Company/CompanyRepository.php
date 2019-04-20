@@ -6,6 +6,7 @@ use App\Entity\Company\Company;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +18,23 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 class CompanyRepository extends ServiceEntityRepository {
     public function __construct(RegistryInterface $registry) {
         parent::__construct($registry, Company::class);
+    }
+
+    /**
+     * @param string $property
+     * @param string $order
+     * @return Company[]|Paginator
+     */
+    public function findAllOrderedBy(string $property = "id", string $order = "asc") : Paginator{
+        return new Paginator($this->createQueryBuilder("c")
+            ->select("c")
+            ->orderBy("c.".$property, $order));
+    }
+
+    public function findAllOrderedByNumberInvoices(){
+        return new Paginator($this->createQueryBuilder('c')
+        ->select('c, (COUNT(ii) + COUNT(ri)) as HIDDEN totalInvoices')->leftJoin('c.issuedInvoices', ' ii')
+        ->leftJoin('c.receivedInvoices','ri')->orderBy('totalInvoices', 'ASC'));
     }
 
     public function countAllCompanies(User $user) : int {

@@ -41,7 +41,7 @@ class Company {
      * @ORM\Column(type="string", length=16, unique=true)
      * @Assert\NotBlank(message="O NIF é obrigatório.")
      * @Assert\NotNull()
-     * @Assert\Length(min=9, max=9)
+     * @Assert\Length(min=9, max=9, exactMessage="O NIF deve ter 9 digitos.")
      */
     private $nif;
 
@@ -55,19 +55,19 @@ class Company {
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Invoice\Invoice", mappedBy="issuer", orphanRemoval=true)
-     * @Serializer\MaxDepth(1)
+     * @ORM\OrderBy({"number" = "asc"})
      */
     private $issuedInvoices;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Invoice\Invoice", mappedBy="client", orphanRemoval=true)
-     * @Serializer\MaxDepth(1)
+     * @ORM\OrderBy({"number" = "asc"})
      */
     private $receivedInvoices;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="companies")
-     * @Serializer\Exclude()
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
@@ -186,10 +186,41 @@ class Company {
     public function getTotalInvoiced(): float {
         $invoices = $this->getIssuedInvoices();
         $total = 0;
-        foreach($invoices as $invoice){
+        foreach ($invoices as $invoice) {
             $total += $invoice->getTotal();
         }
 
         return $total;
+    }
+
+
+    /**
+     * @return Company[]|Collection
+     */
+    public function getClientCompanies(): Collection {
+        $companies = new ArrayCollection();
+        foreach ($this->getIssuedInvoices() as $invoice) {
+            $company = $invoice->getClient();
+            if($companies->contains($company) === false){
+                $companies->add($company);
+            }
+        }
+
+        return $companies;
+    }
+
+    /**
+     * @return Company[]|Collection
+     */
+    public function getSupplierCompanies(): Collection {
+        $companies = new ArrayCollection();
+        foreach ($this->getReceivedInvoices() as $invoice) {
+            $company = $invoice->getIssuer();
+            if ($companies->contains($company) === false) {
+                $companies->add($company);
+            }
+        }
+
+        return $companies;
     }
 }

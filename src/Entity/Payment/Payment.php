@@ -40,6 +40,7 @@ class Payment {
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Invoice\Invoice", inversedBy="payments")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $invoice;
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Product;
 
+use App\Entity\Company\Company;
 use App\Entity\Invoice\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -102,5 +103,37 @@ class Product {
         }
 
         return $this;
+    }
+
+    /**
+     * Returns a list of companies who bought this product before.
+     * @return Company[]|Collection
+     */
+    public function getBuyingCompanies() : Collection{
+        $companies = new ArrayCollection();
+        foreach ($this->getInvoiceItems() as $invoiceItem){
+            $company = $invoiceItem->getInvoice()->getClient();
+            if(!$companies->contains($company)){
+                $companies->add($company);
+            }
+        }
+
+        return $companies;
+    }
+
+    /**
+     * Returns a list of the companies who sell this product before
+     * @return Company[]|Collection
+     */
+    public function getSellingCompanies() : Collection{
+        $companies = new ArrayCollection();
+        foreach ($this->getInvoiceItems() as $invoiceItem){
+            $company = $invoiceItem->getInvoice()->getIssuer();
+            if(!$companies->contains($company)){
+                $companies->add($company);
+            }
+        }
+
+        return $companies;
     }
 }

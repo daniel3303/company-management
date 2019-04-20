@@ -25,7 +25,8 @@
                             <tbody>
                                 {% for company in companies %}
                                     <tr>
-                                        <td>{{ company.name }}</td>
+                                        <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                with {company: company} %}{% endembed %}</td>
                                         <td>{{ company.nif }}</td>
                                         <td>{{ company.address}}</td>
                                         <td>{{ company.issuedInvoices.count}}</td>
@@ -59,7 +60,9 @@
                             </tfoot>
                         </table>
                     </div>
+                </div>
 
+                <div class="card-footer">
                     <a href="{{ path('backend_company_managed_company_new') }}"
                        class="btn btn-success btn-icon-split">
                         <span class="icon text-white-50">

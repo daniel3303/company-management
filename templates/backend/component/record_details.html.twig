@@ -1,5 +1,0 @@
-{% if paginator is not empty %}
-    <p class="text-right">Found <strong>{{ paginator.count }}</strong> {{ paginator.count > 1 ? 'records' : 'record' }} in the database.</p>
-{% else %}
-    <p class="text-right">No records found</p>
-{% endif %}

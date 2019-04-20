@@ -30,7 +30,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Faturas Registadas</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Faturas Registadas
+                            </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ numInvoices }}</div>
                         </div>
                         <div class="col-auto">
@@ -47,7 +48,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Produtos Registados</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Produtos Registados
+                            </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ numProducts }}</div>
                         </div>
                         <div class="col-auto">
@@ -72,6 +74,37 @@
                             <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Empresas preferidas</h6>
+                </div>
+                <div class="card-body">
+                    {% embed 'backend/component/pagination/record_details.html.twig' with {paginator: popularCompanies} %}{% endembed %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for company in popularCompanies %}
+                                <tr>
+                                    <td>
+                                        {% embed 'backend/component/identifier/company.html.twig'
+                                            with {company: company} %}{% endembed %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% embed 'backend/component/pagination/pagination.html.twig' with {paginator: popularCompanies} %}{% endembed %}
                 </div>
             </div>
         </div>

@@ -1,0 +1,5 @@
+{% if paginator is not empty %}
+    <p class="text-right">Foram encontrados <strong>{{ paginator.count }}</strong> resultados na base de dados.</p>
+{% else %}
+    <p class="text-right">Não foram encontrados resultados.</p>
+{% endif %}

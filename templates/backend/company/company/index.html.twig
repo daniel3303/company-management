@@ -23,7 +23,8 @@
                             <tbody>
                                 {% for company in companies %}
                                     <tr>
-                                        <td>{{ company.name }}</td>
+                                        <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                with {company: company} %}{% endembed %}</td>
                                         <td>{{ company.nif }}</td>
                                         <td>{{ company.address}}</td>
                                         <td>

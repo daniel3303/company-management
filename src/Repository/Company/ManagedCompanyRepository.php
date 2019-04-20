@@ -4,6 +4,7 @@ namespace App\Repository\Company;
 
 use App\Entity\Company\ManagedCompany;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,32 +20,14 @@ class ManagedCompanyRepository extends ServiceEntityRepository
         parent::__construct($registry, ManagedCompany::class);
     }
 
-    // /**
-    //  * @return ManagedCompany[] Returns an array of ManagedCompany objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    /**
+     * @param string $property
+     * @param string $order
+     * @return ManagedCompany[]|Paginator
+     */
+    public function findAllOrderedBy(string $property = "id", string $order = "asc") : Paginator{
+        return new Paginator($this->createQueryBuilder("c")
+            ->select("c")
+            ->orderBy("c.".$property, $order));
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ManagedCompany
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -14,4 +14,12 @@ class WelcomeController extends AbstractController
     {
         return $this->redirectToRoute("backend_dashboard");
     }
+
+    /**
+     * @Route("/backend", name="welcome")
+     */
+    public function backendIndex()
+    {
+        return $this->redirectToRoute("backend_dashboard");
+    }
 }

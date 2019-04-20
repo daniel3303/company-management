@@ -26,10 +26,13 @@
                             <tbody>
                                 {% for invoice in invoices %}
                                     <tr>
-                                        <td><a href="{{ path('backend_invoice_invoice_show', {id: invoice.id}) }}">#{{ invoice.number }}</a></td>
+                                        <td>{% embed 'backend/component/identifier/invoice.html.twig'
+                                                with {invoice: invoice} %}{% endembed %}</td>
                                         <td>{{ invoice.date|date("d/m/Y") }}</td>
-                                        <td>{{ invoice.issuer.name }}</td>
-                                        <td>{{ invoice.client.name }}</td>
+                                        <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                with {company: invoice.issuer} %}{% endembed %}</td>
+                                        <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                with {company: invoice.client} %}{% endembed %}</td>
                                         <td>{{ invoice.total|number_format(2, ".", ".") }}€</td>
                                         <td>{{ invoice.paid ?
                                             '<span class="badge badge-success">Sim</span>'
@@ -65,7 +68,9 @@
                             </tfoot>
                         </table>
                     </div>
+                </div>
 
+                <div class="card-footer">
                     <a href="{{ path('backend_invoice_invoice_new') }}"
                        class="btn btn-success btn-icon-split">
                         <span class="icon text-white-50">

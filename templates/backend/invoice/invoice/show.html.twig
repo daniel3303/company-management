@@ -16,8 +16,10 @@
                             <p>
                                 <strong>Número:</strong>#{{ invoice.number }}<br />
                                 <strong>Data:</strong>{{ invoice.date|date("d/m/Y") }}<br />
-                                <strong>Emissor:</strong>{{ invoice.issuer.name }}<br />
-                                <strong>Cliente:</strong>{{ invoice.client.name }}<br />
+                                <strong>Emissor:</strong>{% embed 'backend/component/identifier/company.html.twig'
+                                    with {company: invoice.issuer} %}{% endembed %}<br />
+                                <strong>Cliente:</strong>{% embed 'backend/component/identifier/company.html.twig'
+                                    with {company: invoice.client} %}{% endembed %}<br />
                             </p>
                         </div>
                     </div>
@@ -37,7 +39,8 @@
                                 <tbody>
                                     {% for item in invoice.items %}
                                         <tr>
-                                            <td>{{ item.product.name }}</td>
+                                            <td>{% embed 'backend/component/identifier/product.html.twig'
+                                                with {product: item.product }%}{% endembed %}</td>
                                             <td>{{ item.quantity }}</td>
                                             <td>{{ item.pricePerUnit|number_format(2, '.', ',') }}€</td>
                                             <td>{{ item.waste }}</td>

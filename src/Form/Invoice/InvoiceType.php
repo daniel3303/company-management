@@ -32,7 +32,7 @@ class InvoiceType extends AbstractType {
             ])
             ->add('client', EntityType::class, [
                 'class' => Company::class,
-                'label' => 'Emissor',
+                'label' => 'Cliente',
                 'choice_label' => 'name',
             ])
             ->add('items', CollectionType::class, [

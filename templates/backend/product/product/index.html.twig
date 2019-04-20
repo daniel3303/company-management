@@ -22,7 +22,8 @@
                             <tbody>
                                 {% for product in products %}
                                     <tr>
-                                        <td>{{ product.name }}</td>
+                                        <td>{% embed 'backend/component/identifier/product.html.twig'
+                                            with {product: product} %}{% endembed %}</td>
                                         <td>{{ product.description }}</td>
                                         <td>
                                             <a href="{{ path('backend_product_product_edit', {'id': product.id}) }}"

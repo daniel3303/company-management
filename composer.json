@@ -8,6 +8,7 @@
         "ext-json": "^1.6",
         "beberlei/DoctrineExtensions": "^1.1",
         "jms/serializer-bundle": "^3.0",
+        "knplabs/knp-paginator-bundle": "^3.0",
         "moontoast/math": "^1.1",
         "nelmio/cors-bundle": "^1.5",
         "ramsey/uuid": "^3.8",

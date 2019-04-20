@@ -20,7 +20,7 @@ class CompanyController extends AbstractController {
      */
     public function index(CompanyRepository $companyRepository): Response {
         return $this->render('backend/company/company/index.html.twig', [
-            'companies' => $companyRepository->findAll(),
+            'companies' => $companyRepository->findAllOrderedBy("name"),
         ]);
     }
 
@@ -31,11 +31,10 @@ class CompanyController extends AbstractController {
         $company = new Company();
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
+        $company->setUser($this->getUser());
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
-            $user = $this->getUser();
-            $company->setUser($user);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($company);
             $entityManager->flush();
@@ -46,6 +45,15 @@ class CompanyController extends AbstractController {
         return $this->render('backend/company/company/new.html.twig', [
             'company' => $company,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/show", name="backend_company_company_show", methods={"GET"})
+     */
+    public function show(Request $request, Company $company): Response {
+        return $this->render('backend/company/company/show.html.twig', [
+            'company' => $company,
         ]);
     }
 

@@ -23,13 +23,13 @@ class Item {
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\GreaterThanOrEqual(value="0")
+     * @Assert\GreaterThanOrEqual(value="0", message="A quantidade deve ser igual ou superior a 0.")
      */
     private $quantity;
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\GreaterThanOrEqual(value="0")
+     * @Assert\GreaterThanOrEqual(value="0", message="O preço por unidade deve ser igual ou superior a 0.")
      */
     private $pricePerUnit;
 

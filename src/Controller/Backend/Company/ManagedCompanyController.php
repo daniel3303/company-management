@@ -22,7 +22,7 @@ class ManagedCompanyController extends AbstractController
     public function index(ManagedCompanyRepository $companyRepository): Response
     {
         return $this->render('backend/company/managed_company/index.html.twig', [
-            'companies' => $companyRepository->findAll(),
+            'companies' => $companyRepository->findAllOrderedBy("name"),
         ]);
     }
 
@@ -34,6 +34,7 @@ class ManagedCompanyController extends AbstractController
         $managedCompany = new ManagedCompany();
         $form = $this->createForm(ManagedCompanyType::class, $managedCompany);
         $form->handleRequest($request);
+        $managedCompany->setUser($this->getUser());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
