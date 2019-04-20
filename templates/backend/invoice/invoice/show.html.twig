@@ -1,0 +1,94 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}Fatura #{{ invoice.number }} emitida por {{ invoice.issuer.name }} para {{ invoice.client.name }} {% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Fatura #{{ invoice.number }} emitida
+                        por {{ invoice.issuer.name }} para {{ invoice.client.name }}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Número:</strong>#{{ invoice.number }}<br />
+                                <strong>Data:</strong>{{ invoice.date|date("d/m/Y") }}<br />
+                                <strong>Emissor:</strong>{{ invoice.issuer.name }}<br />
+                                <strong>Cliente:</strong>{{ invoice.client.name }}<br />
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <h3>Produtos comprados</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th>Quantidade</th>
+                                        <th>Preço/Unidade</th>
+                                        <th>Refúgo</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in invoice.items %}
+                                        <tr>
+                                            <td>{{ item.product.name }}</td>
+                                            <td>{{ item.quantity }}</td>
+                                            <td>{{ item.pricePerUnit|number_format(2, '.', ',') }}€</td>
+                                            <td>{{ item.waste }}</td>
+                                            <td>{{ item.total|number_format(2, '.', ',') }}€</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <p>
+                                <strong>Total:</strong> {{ invoice.total|number_format(2, '.', ',') }}€
+                                <br>
+                                <strong>Por pagar:</strong> {{ invoice.missingToPay|number_format(2, '.', ',') }}€
+                            </p>
+                        </div><!-- col -->
+
+
+                        <div class="col-12 col-md-6">
+                            <h3>Pagamentos</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Descrição</th>
+                                        <th>Método</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for payment in invoice.payments %}
+                                        <tr>
+                                            <td>{{ payment.date|date("d/m/Y") }}</td>
+                                            <td>{{ payment.description }}</td>
+                                            <td>{{ payment.method }}</td>
+                                            <td>{{ payment.amount|number_format(2, '.', ',') }}€</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <p><strong>Total pago:</strong> {{ invoice.totalPaid|number_format(2, '.', ',') }}€</p>
+                        </div><!-- col -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('backend_invoice_invoice_index') }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar à lista</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

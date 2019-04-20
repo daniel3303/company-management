@@ -1,0 +1,61 @@
+{% extends 'backend/master.html.twig' %}
+{% block title %}Listagem de pagamentos{% endblock %}
+{% block contentTitle %}Listagem de pagamentos{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Listagem de pagamentos</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Descrição</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for payment in payments %}
+                                    <tr>
+                                        <td>{{ payment.description }}</td>
+                                        <td>{{ payment.date|date("d/m/Y") }}</td>
+                                        <td>
+                                            <a href="{{ path('backend_payment_payment_edit', {'id': payment.id}) }}"
+                                               class="btn btn-info btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                  <i class="fas fa-edit"></i>
+                                                </span>
+                                                <span class="text">Editar</span>
+                                            </a>
+                                            {{ include('backend/payment/payment/_delete_form.html.twig') }}
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5">Não foram encontrados resultados</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Descrição</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

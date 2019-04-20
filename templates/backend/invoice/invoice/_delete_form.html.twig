@@ -1,0 +1,11 @@
+<form method="post" class="d-inline" action="{{ path('backend_invoice_invoice_delete', {'id': invoice.id}) }}"
+      onsubmit="return confirm('Tem a certeza que pretende eliminar este item?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ invoice.id) }}">
+    <button class="btn btn-danger btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-trash"></i>
+        </span>
+        <span class="text">Apagar</span>
+    </button>
+</form>

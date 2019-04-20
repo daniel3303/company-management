@@ -1,0 +1,49 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form) }}
+    {{ form_row(form.number) }}
+    {{ form_row(form.date) }}
+    {{ form_row(form.client) }}
+    {{ form_row(form.issuer) }}
+
+    {{ form_row(form.items) }}
+
+    <button type="button"
+            class="btn btn-danger remove-collection-element-form"
+            data-list-selector="#invoice_items"><i class="fa fa-times"></i> Remover item
+    </button>
+
+    <button type="button"
+            class="btn btn-success add-collection-element-form"
+            data-list-selector="#invoice_items"><i class="fa fa-plus"></i> Adicionar item
+    </button>
+
+    <hr />
+
+    {{ form_row(form.payments) }}
+
+    <button type="button"
+            class="btn btn-danger remove-collection-element-form"
+            data-list-selector="#invoice_payments"><i class="fa fa-times"></i> Remover Pagamento
+    </button>
+
+    <button type="button"
+            class="btn btn-success add-collection-element-form"
+            data-list-selector="#invoice_payments"><i class="fa fa-plus"></i> Adicionar Pagamento
+    </button>
+
+    <hr />
+
+    {{ form_widget(form) }}
+
+
+
+    <hr />
+
+    <button class="btn btn-success btn-icon-split">
+        <span class="icon text-white-50">
+          <i class="fas fa-check"></i>
+        </span>
+        <span class="text">{{ button_label|default('Guardar') }}</span>
+    </button>
+
+{{ form_end(form) }}

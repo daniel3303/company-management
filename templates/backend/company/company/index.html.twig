@@ -1,0 +1,71 @@
+{% extends 'backend/master.html.twig' %}
+{% block title %}Empresas clientes e fornecedoras{% endblock %}
+{% block contentTitle %}Empresas clientes e fornecedoras{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Empresas clientes e fornecedoras</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Nif</th>
+                                    <th>Morada</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for company in companies %}
+                                    <tr>
+                                        <td>{{ company.name }}</td>
+                                        <td>{{ company.nif }}</td>
+                                        <td>{{ company.address}}</td>
+                                        <td>
+                                            <a href="{{ path('backend_company_company_edit', {'id': company.id}) }}"
+                                               class="btn btn-info btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                  <i class="fas fa-edit"></i>
+                                                </span>
+                                                <span class="text">Editar</span>
+                                            </a>
+                                            {{ include('backend/company/company/_delete_form.html.twig') }}
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5">Não foram encontrados resultados</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Nif</th>
+                                    <th>Morada</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <a href="{{ path('backend_company_company_new') }}"
+                       class="btn btn-success btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-plus"></i>
+                        </span>
+                        <span class="text">Criar nova</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
