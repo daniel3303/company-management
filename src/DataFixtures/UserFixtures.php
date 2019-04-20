@@ -14,19 +14,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 
-class AppFixtures extends Fixture {
+class UserFixtures extends BaseFixture {
     /**
      * @param ObjectManager $manager
      * @throws \Exception
      */
-    public function load(ObjectManager $manager){
-        // User
-        $user = new User();
-        $user->setEmail("demo@skern.pt");
-        $user->setName("Skern");
-
-        $user->setPlainPassword("123456");
-        $manager->persist($user);
-        $manager->flush();
+    public function loadData(ObjectManager $manager){
+        $this->createMany(User::class, 1, function (User $user, int $count){
+            $user->setEmail("demo@skern.pt");
+            $user->setName("Skern");
+            $user->setPlainPassword("123456");
+        });
     }
 }
