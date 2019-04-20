@@ -11,6 +11,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        {% embed 'backend/component/pagination/record_details.html.twig' with {paginator: payments} %}{% endembed %}
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
@@ -52,6 +53,7 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        {% embed 'backend/component/pagination/pagination.html.twig' with {paginator: payments} %}{% endembed %}
                     </div>
 
                 </div>
