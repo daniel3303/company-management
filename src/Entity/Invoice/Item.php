@@ -36,18 +36,20 @@ class Item {
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Invoice\Invoice", inversedBy="items")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull(message="A fatura é obrigatória.")
      */
     private $invoice;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Product\Product", inversedBy="invoiceItems")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull(message="O produto é opbrigatório.")
      */
     private $product;
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\GreaterThanOrEqual(value="0")
+     * @Assert\GreaterThanOrEqual(value="0", message="0 refúgo não pode ser negativo.")
      */
     private $waste;
 
