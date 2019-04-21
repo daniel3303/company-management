@@ -53,7 +53,9 @@
     window.addEventListener("load", function (event) {
         $("select.form-control").select2({
             language: "pt",
-            theme: "bootstrap"
+            theme: "bootstrap",
+            allowClear: true,
+            placeholder: "Selecione uma opção",
         });
     })
 })(jQuery);
