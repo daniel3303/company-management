@@ -20,7 +20,7 @@ class BaseController extends AbstractController {
         $pager = new Pagerfanta(new DoctrineORMAdapter($query));
         $pager->setAllowOutOfRangePages(true);
         $pager->setCurrentPage($request->query->getInt($name."page", 1));
-        $pager->setMaxPerPage($request->query->getInt($name."per-page", 10));
+        $pager->setMaxPerPage($request->query->getInt($name."per-page", 50));
 
         return $pager;
     }

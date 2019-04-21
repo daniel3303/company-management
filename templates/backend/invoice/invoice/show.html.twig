@@ -38,6 +38,7 @@
                                         <th>Refúgo</th>
                                         <th>Subtotal</th>
                                         <th class="text-right">Total</th>
+                                        <th class="text-right">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -50,6 +51,7 @@
                                             <td>{{ item.waste }}</td>
                                             <td>{{ item.subTotal|number_format(2, '.', ',') }}€</td>
                                             <td class="text-right">{{ item.total|number_format(2, '.', ',') }}€</td>
+                                            <td class="text-right">{{ include('backend/invoice/item/_delete_form.html.twig') }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -57,11 +59,14 @@
                                     <tr>
                                         <th colspan="5">Subtotal</th>
                                         <th class="text-right">{{ invoice.subTotal|number_format(2, '.', ',') }}€</th>
+                                        <th></th>
                                     </tr>
                                     <tr>
                                         <th colspan="5">Total</th>
                                         <th class="text-right">{{ invoice.total|number_format(2, '.', ',') }}€</th>
+                                        <th></th>
                                     </tr>
+
                                 </tfoot>
                             </table>
                         </div><!-- col -->
@@ -76,6 +81,7 @@
                                         <th>Descrição</th>
                                         <th>Método</th>
                                         <th class="text-right">Valor</th>
+                                        <th class="text-right">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,6 +91,7 @@
                                             <td>{{ payment.description }}</td>
                                             <td>{{ payment.method }}</td>
                                             <td class="text-right">{{ payment.amount|number_format(2, '.', ',') }}€</td>
+                                            <td class="text-right">{{ include('backend/payment/payment/_delete_form.html.twig') }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -92,10 +99,12 @@
                                     <tr>
                                         <th colspan="3">Total pago:</th>
                                         <th class="text-right">{{ invoice.totalPaid|number_format(2, '.', ',') }}€</th>
+                                        <th></th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">Por pagar:</th>
                                         <th class="text-right">{{ invoice.missingToPay|number_format(2, '.', ',') }}€</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -116,6 +125,7 @@
                                                 </span>
                         <span class="text">Editar</span>
                     </a>
+                    {{ include('backend/invoice/invoice/_delete_form.html.twig') }}
                 </div>
             </div>
         </div>
