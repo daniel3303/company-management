@@ -8,30 +8,46 @@
         <div class="col-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Detalhes do produto: {{ product.name}}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Detalhes do produto: {{ product.name }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
                             <p>
-                                <strong>Nome: </strong> {{ product.name }}<br />
+                                <strong>Nome: </strong> {{ product.name }}<br/>
                                 {% if product.category is not null %}
-                                    <strong>Categoria: </strong> {% embed 'backend/component/identifier/category.html.twig' with {category: product.category} %}{% endembed %}<br />
+                                    <strong>Categoria: </strong> {% embed 'backend/component/identifier/category.html.twig' with {category: product.category} %}{% endembed %}
+                                    <br/>
                                 {% endif %}
-                                <strong>Descrição: </strong> {{ product.description }}<br />
+                                <strong>Descrição: </strong> {{ product.description }}<br/>
                                 {% if product.lowestPriceItem != null %}
-                                    <strong>Preço mínimo de venda: </strong> {{ product.lowestPriceItem.pricePerUnit|number_format(2, ',', '.') }}€<br />
+                                    <strong>Preço mínimo de
+                                        venda: </strong> {{ product.lowestPriceItem.pricePerUnit|number_format(2, ',', '.') }}€
+                                    <br/>
                                 {% endif %}
                                 {% if product.highestPriceItem != null %}
-                                    <strong>Preço máximo de venda: </strong> {{ product.highestPriceItem.pricePerUnit|number_format(2, ',', '.') }}€<br />
+                                    <strong>Preço máximo de
+                                        venda: </strong> {{ product.highestPriceItem.pricePerUnit|number_format(2, ',', '.') }}€
+                                    <br/>
                                 {% endif %}
-                                <strong>Preço médio de venda: </strong> {{ product.averagePrice|number_format(2, ',', '.') }}€<br />
-                                <strong>Valor total transacionado: </strong> {{ product.totalPrice|number_format(2, ',', '.') }}€<br />
-                                <strong>Quantidade total transacionada: </strong> {{ product.totalQuantitySold|number_format(2, ',', '.') }}{{ product.unit }}<br />
+                                <strong>Preço médio de
+                                    venda: </strong> {{ product.averagePrice|number_format(2, ',', '.') }}€<br/>
+                                <strong>Valor total
+                                    transacionado: </strong> {{ product.totalPrice|number_format(2, ',', '.') }}€<br/>
+                                <strong>Quantidade total
+                                    transacionada: </strong> {{ product.totalQuantitySold|number_format(2, ',', '.') }}{{ product.unit }}
+                                <br/>
 
                             </p>
                         </div>
                     </div>
+
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            {{ chart(stats) }}
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-12 col-md-6">
                             <h3>Empresas que já compraram</h3>

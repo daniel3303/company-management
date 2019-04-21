@@ -45,7 +45,7 @@ class Invoice {
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company\Company", inversedBy="issuedInvoices")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotIdenticalTo(propertyPath="issuer", message="O cliente e o emissor não podem ser a mesma empresa.")
+     * @Assert\NotIdenticalTo(propertyPath="client", message="O cliente e o emissor não podem ser a mesma empresa.")
      */
     private $issuer;
 
