@@ -74,38 +74,6 @@
 
                     <div class="row">
                         <div class="col-12 col-md-6">
-                            <h3>Faturas recebidas</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Número</th>
-                                        <th>Emissor</th>
-                                        <th>Data</th>
-                                        <th>Valor</th>
-                                        <th>Pago</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for invoice in company.receivedInvoices %}
-                                        <tr>
-                                            <td>{% embed 'backend/component/identifier/invoice.html.twig'
-                                                    with {invoice:invoice} %}{% endembed %}</td>
-                                            <td>{% embed 'backend/component/identifier/company.html.twig'
-                                                    with {company:invoice.issuer} %}{% endembed %}</td>
-                                            <td>{{ invoice.date|date("d/m/Y") }}</td>
-                                            <td>{{ invoice.total|number_format(2, ',', '.') }}€</td>
-                                            <td>{{ invoice.paid  ?
-                                                '<span class="badge badge-success">Sim</span>'
-                                                : '<span class="badge badge-danger">Não</span>' }}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div><!-- col -->
-
-
-                        <div class="col-12 col-md-6">
                             <h3>Faturas emitidas</h3>
                             <table class="table table-striped">
                                 <thead>
@@ -126,6 +94,37 @@
                                                 with {company:invoice.client} %}{% endembed %}</td>
                                             <td>{{ invoice.date|date("d/m/Y") }}</td>
                                             <td>{{ invoice.total|number_format(2, '.', ',') }}€</td>
+                                            <td>{{ invoice.paid  ?
+                                                '<span class="badge badge-success">Sim</span>'
+                                                : '<span class="badge badge-danger">Não</span>' }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div><!-- col -->
+
+                        <div class="col-12 col-md-6">
+                            <h3>Faturas recebidas</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Número</th>
+                                        <th>Emissor</th>
+                                        <th>Data</th>
+                                        <th>Valor</th>
+                                        <th>Pago</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for invoice in company.receivedInvoices %}
+                                        <tr>
+                                            <td>{% embed 'backend/component/identifier/invoice.html.twig'
+                                                    with {invoice:invoice} %}{% endembed %}</td>
+                                            <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                    with {company:invoice.issuer} %}{% endembed %}</td>
+                                            <td>{{ invoice.date|date("d/m/Y") }}</td>
+                                            <td>{{ invoice.total|number_format(2, ',', '.') }}€</td>
                                             <td>{{ invoice.paid  ?
                                                 '<span class="badge badge-success">Sim</span>'
                                                 : '<span class="badge badge-danger">Não</span>' }}
