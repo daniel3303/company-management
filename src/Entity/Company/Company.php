@@ -7,6 +7,7 @@ use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
@@ -15,8 +16,8 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="App\Repository\Company\CompanyRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorMap({"managedCompany" = "ManagedCompany", "company" = "Company"})
- * @Serializer\AccessType("public_method")
- * @Serializer\ReadOnly()
+ * @UniqueEntity("name", message="Já existe uma empresa com este nome.", errorPath="name")
+ * @UniqueEntity("nif", message="Já existe uma empresa com este nif.", errorPath="nif")
  */
 class Company {
     public const COMPANY = "COMPANY";

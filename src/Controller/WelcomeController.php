@@ -16,7 +16,7 @@ class WelcomeController extends AbstractController
     }
 
     /**
-     * @Route("/backend", name="welcome")
+     * @Route("/backend", name="welcome_backend")
      */
     public function backendIndex()
     {
