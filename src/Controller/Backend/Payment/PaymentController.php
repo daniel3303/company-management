@@ -21,7 +21,7 @@ class PaymentController extends BaseController
      */
     public function index(PaymentRepository $paymentRepository, Request $request): Response
     {
-        $payments = $paymentRepository->findAllOrderedBy("date");
+        $payments = $paymentRepository->findAllWithPaginator("date");
         $payments = $this->paginate($payments->getQuery(), $request);
         return $this->render('backend/payment/payment/index.html.twig', [
             'payments' => $payments,

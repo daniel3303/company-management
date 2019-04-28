@@ -9,6 +9,7 @@
 namespace App\Controller\Backend;
 
 
+use App\Repository\BaseRepository;
 use Doctrine\ORM\Query;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -23,5 +24,13 @@ class BaseController extends AbstractController {
         $pager->setMaxPerPage($request->query->getInt($name."per-page", 50));
 
         return $pager;
+    }
+
+    protected function paginateWithSorting(BaseRepository $repository, Request $request, string $name = "") : Pagerfanta{
+        $orderProperty = $request->get("sort-by");
+        $order = $request->get("sort-order");
+        $query = $repository->findAllWithPaginator($orderProperty, $order)->getQuery();
+
+        return $this->paginate($query, $request);
     }
 }

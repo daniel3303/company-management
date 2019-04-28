@@ -23,7 +23,7 @@ class CompanyController extends BaseController {
      */
     public function index(CompanyRepository $companyRepository, Request $request): Response {
         /** @var $companies Company[]|Pagerfanta */
-        $companies = $this->paginate($companyRepository->findAllOrderedBy("name")->getQuery(), $request);
+        $companies = $this->paginateWithSorting($companyRepository, $request);
         return $this->render('backend/company/company/index.html.twig', [
             'companies' => $companies,
         ]);

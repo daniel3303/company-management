@@ -23,7 +23,7 @@ class ProductController extends BaseController {
      * @Route("/", name="backend_product_product_index", methods={"GET"})
      */
     public function index(ProductRepository $productRepository, Request $request): Response {
-        $products = $this->paginate($productRepository->findAllOrderedBy("name")->getQuery(), $request);
+        $products = $this->paginate($productRepository->findAllWithPaginator("name")->getQuery(), $request);
         return $this->render('backend/product/product/index.html.twig', [
             'products' => $products,
         ]);

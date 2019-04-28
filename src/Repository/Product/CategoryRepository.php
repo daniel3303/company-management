@@ -3,6 +3,7 @@
 namespace App\Repository\Product;
 
 use App\Entity\Product\Category;
+use App\Repository\BaseRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -12,51 +13,12 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Category|null findOneBy(array $criteria, array $orderBy = null)
  * @method Category[]    findAll()
  * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Category[]|Paginator  findAllWithPaginator(?string $property = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
  */
-class CategoryRepository extends ServiceEntityRepository
+class CategoryRepository extends BaseRepository
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Category::class);
     }
-
-    /**
-     * @param string $property
-     * @param string $order
-     * @return Category[]|Paginator
-     */
-    public function findAllOrderedBy(string $property = "id", string $order = "asc") : Paginator{
-        return new Paginator($this->createQueryBuilder("c")
-            ->select("c")
-            ->orderBy("c.".$property, $order));
-    }
-
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Category
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

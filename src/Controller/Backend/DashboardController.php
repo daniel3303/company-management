@@ -31,7 +31,7 @@ class DashboardController extends BaseController {
         $numProducts = $productRepository->countAllProducts();
         $numPayments = $paymentRepository->countAllPayments();
 
-        $myCompanies = $managedCompanyRepository->findAllOrderedBy('name', 'asc')->getQuery();
+        $myCompanies = $managedCompanyRepository->findAllWithPaginator('name', 'asc')->getQuery();
         $myCompanies = $this->paginate($myCompanies, $request);
         /** @var $myCompanies Company[]|Pagerfanta*/
 
