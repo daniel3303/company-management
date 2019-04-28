@@ -80,7 +80,7 @@ class ProductController extends BaseController {
         $year = $request->query->getInt("year", null) ?: date("Y");
         //Select expenses sum for a product by month on a given year
         $rawData = $entityManager->createQuery("
-            SELECT SUM(item.quantity * item.pricePerUnit) as totalSpent, AVG(item.pricePerUnit) as averagePrice, SUM(item.quantity) as totalSold,
+            SELECT SUM(item.quantity * item.pricePerUnit) as totalSpent, SUM(item.quantity * item.pricePerUnit)/SUM(item.quantity) as averagePrice, SUM(item.quantity) as totalSold,
             MONTH(invoice.date) AS month, YEAR(invoice.date) AS year FROM App\Entity\Invoice\Invoice invoice
             JOIN invoice.items item JOIN item.product product WHERE product.id = :productId AND YEAR(invoice.date) = :year
             GROUP BY month, year ORDER BY year, month DESC
@@ -89,7 +89,7 @@ class ProductController extends BaseController {
             ->setParameter("year", $year)
             ->execute();
 
-        $chart = BarChart::createForYear(["Valor transacionado", "Quantidade vendida"]);
+        $chart = BarChart::createForYear(["Valor transacionado", "Quantidade vendida", "Preço médio de venda"]);
         $chart->setDecimalPlaces(2);
 
         foreach ($rawData as $elem) {
@@ -99,6 +99,9 @@ class ProductController extends BaseController {
 
             $bar = $chart->getBarByIndex("Quantidade vendida", $month-1);
             $bar->setY(doubleval($elem["totalSold"]));
+
+            $bar = $chart->getBarByIndex("Preço médio de venda", $month-1);
+            $bar->setY(doubleval($elem["averagePrice"]));
         }
 
         return $this->render('backend/product/product/show.html.twig', [
