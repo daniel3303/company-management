@@ -2,8 +2,8 @@
 Company Management Software
 
 # Requirements
-- Mysql 5.7
-- Apache 2
+- Mysql 5.7 or higher
+- PHP 7.2 or higher
 
 # Installation
     git clone https://github.com/daniel3303/company-management.git
