@@ -13,6 +13,11 @@ Company Management Software
 Open and configure your database in .env file then run.
     
     php bin/console doctrine:schema:update --force
+    
+# Running
+    php bin/console server:run
+   
+Then go to localhost:8000 in your browser
 
 # Dummy data
 To load test dummy data run:
