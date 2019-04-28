@@ -22,7 +22,7 @@ class ManagedCompanyController extends AbstractController
     public function index(ManagedCompanyRepository $companyRepository): Response
     {
         return $this->render('backend/company/managed_company/index.html.twig', [
-            'companies' => $companyRepository->findAllOrderedBy("name"),
+            'companies' => $companyRepository->findAllWithPaginator("name"),
         ]);
     }
 

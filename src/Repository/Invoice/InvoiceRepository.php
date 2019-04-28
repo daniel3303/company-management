@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Invoice|null findOneBy(array $criteria, array $orderBy = null)
  * @method Invoice[]    findAll()
  * @method Invoice[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- * @method Invoice[]|Paginator  findAllWithPaginator(?string $property = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
+ * @method Invoice[]|Paginator  findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
  */
 class InvoiceRepository extends BaseRepository {
     public function __construct(RegistryInterface $registry) {

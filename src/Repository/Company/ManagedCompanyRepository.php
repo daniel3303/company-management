@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method ManagedCompany|null findOneBy(array $criteria, array $orderBy = null)
  * @method ManagedCompany[]    findAll()
  * @method ManagedCompany[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- * @method ManagedCompany[]|Paginator  findAllWithPaginator(?string $property = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
+ * @method ManagedCompany[]|Paginator  findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
  */
 class ManagedCompanyRepository extends BaseRepository
 {

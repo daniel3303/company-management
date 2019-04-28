@@ -19,7 +19,7 @@ abstract class BaseRepository extends ServiceEntityRepository{
     }
 
 
-    public function findAllWithPaginator(?string $property = null, ?string $order = 'asc', ?array $allowedSortProperties = null): Paginator {
+    public function findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null): Paginator {
         $validProperty = false;
 
         //Check the order is valid. If not assigns asc by default
@@ -29,14 +29,14 @@ abstract class BaseRepository extends ServiceEntityRepository{
 
         //Check if the order property exists and is allowed
         $metadata = $this->getClassMetadata();
-        if($metadata->hasField($property) === true
-            && ($allowedSortProperties === null || $allowedSortProperties !== null && in_array($property, $allowedSortProperties) === true)){
+        if($metadata->hasField($orderProperty) === true
+            && ($allowedSortProperties === null || $allowedSortProperties !== null && in_array($orderProperty, $allowedSortProperties) === true)){
             $validProperty = true;
         }
 
         $query = $this->createQueryBuilder("o")->select("o");
         if($validProperty){
-            $query = $query->orderBy("o.".$property, $order);
+            $query = $query->orderBy("o.".$orderProperty, $order);
         }
         return new Paginator($query);
     }

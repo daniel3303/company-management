@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Company|null         findOneBy(array $criteria, array $orderBy = null)
  * @method Company[]            findAll()
  * @method Company[]            findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- * @method Company[]|Paginator  findAllWithPaginator(?string $property = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
+ * @method Company[]|Paginator  findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
  */
 class CompanyRepository extends BaseRepository {
     public function __construct(RegistryInterface $registry) {
