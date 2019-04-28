@@ -17,11 +17,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class BaseController extends AbstractController {
+    const DEFAULT_PER_PAGE = 10;
+
     protected function paginate(Query $query, Request $request, string $name = "") : Pagerfanta{
         $pager = new Pagerfanta(new DoctrineORMAdapter($query));
         $pager->setAllowOutOfRangePages(true);
         $pager->setCurrentPage($request->query->getInt($name."page", 1));
-        $pager->setMaxPerPage($request->query->getInt($name."per-page", 50));
+        $pager->setMaxPerPage($request->getSession()->get($name."per-page") ?? static::DEFAULT_PER_PAGE);
 
         return $pager;
     }

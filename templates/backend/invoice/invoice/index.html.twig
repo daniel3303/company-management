@@ -10,13 +10,13 @@
                     <h6 class="m-0 font-weight-bold text-primary">Listagem de faturas</h6>
                 </div>
                 <div class="card-body">
-                    {% embed 'backend/component/pagination/record_details.html.twig' with {paginator: invoices} %}{% endembed %}
+                    {% embed 'backend/component/pagination/header.html.twig' with {paginator: invoices} %}{% endembed %}
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Número</th>
-                                    <th>Data</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Número", property: "number"} %}{% endembed %}</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Data", property: "date"} %}{% endembed %}</th>
                                     <th>Emissor</th>
                                     <th>Cliente</th>
                                     <th>Valor</th>
@@ -45,7 +45,6 @@
                                                 <span class="icon text-white-50">
                                                   <i class="fas fa-edit"></i>
                                                 </span>
-                                                <span class="text">Editar</span>
                                             </a>
                                             {{ include('backend/invoice/invoice/_delete_form.html.twig') }}
                                         </td>
@@ -68,7 +67,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                        {% embed 'backend/component/pagination/pagination.html.twig' with {paginator: invoices} %}{% endembed %}
+                        {% embed 'backend/component/pagination/footer.html.twig' with {paginator: invoices} %}{% endembed %}
                     </div>
                 </div>
 

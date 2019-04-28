@@ -14,15 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/backend/payment/payment")
  */
-class PaymentController extends BaseController
-{
+class PaymentController extends BaseController {
     /**
      * @Route("/", name="backend_payment_payment_index", methods={"GET"})
      */
-    public function index(PaymentRepository $paymentRepository, Request $request): Response
-    {
-        $payments = $paymentRepository->findAllWithPaginator("date");
-        $payments = $this->paginate($payments->getQuery(), $request);
+    public function index(PaymentRepository $paymentRepository, Request $request): Response {
+        $payments = $this->paginateWithSorting($paymentRepository, $request);
         return $this->render('backend/payment/payment/index.html.twig', [
             'payments' => $payments,
         ]);
@@ -32,9 +29,8 @@ class PaymentController extends BaseController
     /**
      * @Route("/{id}", name="backend_payment_payment_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Payment $payment): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$payment->getId(), $request->request->get('_token'))) {
+    public function delete(Request $request, Payment $payment): Response {
+        if ($this->isCsrfTokenValid('delete' . $payment->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($payment);
             $entityManager->flush();

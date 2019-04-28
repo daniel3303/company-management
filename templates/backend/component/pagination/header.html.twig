@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-between">
+    <div class="items-per-page">
+        Por página:
+        {% set perPage = app.request.query.get("per-page") ?? app.session.get("per-page") %}
+        {% for num in [10, 25, 50, 100, 200, 500] %}
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'per-page': num})) }}"
+               class="btn btn-primary btn-sm {{ perPage == num ? 'active' : '' }}">
+                {{ perPage == num ? '<i class="fa fa-check"></i>' : '' }} {{ num }}</a>
+        {% endfor %}
+    </div>
+    <div class="total-records">
+        {% if paginator is not empty %}
+            <p class="text-right">Foram encontrados <strong>{{ paginator.count }}</strong> resultados na base de dados.</p>
+        {% else %}
+            <p class="text-right">Não foram encontrados resultados.</p>
+        {% endif %}
+    </div>
+</div>

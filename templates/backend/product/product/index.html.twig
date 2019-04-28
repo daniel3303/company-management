@@ -11,11 +11,12 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        {% embed 'backend/component/pagination/record_details.html.twig' with {paginator: products} %}{% endembed %}
+                        {% embed 'backend/component/pagination/header.html.twig' with {paginator: products} %}{% endembed %}
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Nome</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Nome", property: "name"} %}{% endembed %}</th>
+                                    <th>Categoria</th>
                                     <th>Preço Mínimo</th>
                                     <th>Preço Máximo</th>
                                     <th>Ações</th>
@@ -23,9 +24,17 @@
                             </thead>
                             <tbody>
                                 {% for product in products %}
+                                    {# @var product \App\Entity\Product\Product #}
                                     <tr>
                                         <td>{% embed 'backend/component/identifier/product.html.twig'
                                                 with {product: product} %}{% endembed %}</td>
+                                        <td>
+                                            {% if product.category is not null %}
+                                            {{ product.category.name }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             {% if product.lowestPriceItem != null %}
                                                 {{ product.lowestPriceItem.pricePerUnit|number_format(2, '.', ',') }}€ |
@@ -50,7 +59,6 @@
                                                 <span class="icon text-white-50">
                                                   <i class="fas fa-edit"></i>
                                                 </span>
-                                                <span class="text">Editar</span>
                                             </a>
                                             {{ include('backend/product/product/_delete_form.html.twig') }}
                                         </td>
@@ -70,7 +78,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                        {% embed 'backend/component/pagination/pagination.html.twig' with {paginator: products} %}{% endembed %}
+                        {% embed 'backend/component/pagination/footer.html.twig' with {paginator: products} %}{% endembed %}
                     </div>
 
                     <a href="{{ path('backend_product_product_new') }}"

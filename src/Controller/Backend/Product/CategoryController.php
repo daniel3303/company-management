@@ -19,8 +19,7 @@ class CategoryController extends BaseController {
      * @Route("/", name="backend_product_category_index", methods={"GET"})
      */
     public function index(CategoryRepository $categoryRepository, Request $request): Response {
-        $categories = $categoryRepository->findAllWithPaginator("name");
-        $categories = $this->paginate($categories->getQuery(), $request);
+        $categories = $this->paginateWithSorting($categoryRepository, $request);
         return $this->render('backend/product/category/index.html.twig', [
             'categories' => $categories,
         ]);

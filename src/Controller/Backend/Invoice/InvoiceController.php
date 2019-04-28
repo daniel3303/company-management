@@ -21,8 +21,7 @@ class InvoiceController extends BaseController {
      * @Route("/", name="backend_invoice_invoice_index", methods={"GET"})
      */
     public function index(InvoiceRepository $invoiceRepository, Request $request): Response {
-        $invoices = $invoiceRepository->findAllWithPaginator();
-        $invoices = $this->paginate($invoices->getQuery(), $request);
+        $invoices = $this->paginateWithSorting($invoiceRepository, $request);
         /** @var $invoices Invoice[]|Pagerfanta */
 
         return $this->render('backend/invoice/invoice/index.html.twig', [
