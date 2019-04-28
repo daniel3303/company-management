@@ -15,9 +15,9 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Nome</th>
-                                    <th>Nif</th>
-                                    <th>Morada</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Nome", property: "name"} %}{% endembed %}</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Nif", property: "nif"} %}{% endembed %}</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Morada", property: "address"} %}{% endembed %}</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>

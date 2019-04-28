@@ -1,0 +1,23 @@
+{% set sortOrder = app.request.query.get("sort-order", null) %}
+{% set sortProperty = app.request.query.get("sort-by", null) %}
+
+{% if sortProperty != property %}
+    {% set nextSortOrder = "asc" %}
+{% else %}
+    {% if sortOrder is null %}
+    {% set nextSortOrder = "desc" %}
+    {% elseif sortOrder == "asc" %}
+    {% set nextSortOrder = "desc" %}
+    {% else %}
+    {% set nextSortOrder = "asc" %}
+    {% endif %}
+{% endif %}
+
+<a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'sort-by': property, 'sort-order': nextSortOrder})) }}">
+    {{ text|default("Propriedade") }}
+    {% if sortProperty == property and sortOrder == "asc" %}
+        <i class="fa fa-arrow-up"></i>
+    {% elseif sortProperty == property and sortOrder == "desc" %}
+        <i class="fa fa-arrow-down"></i>
+    {% endif %}
+</a>
