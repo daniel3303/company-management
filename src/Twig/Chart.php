@@ -14,6 +14,13 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class Chart extends AbstractExtension {
+    /**
+     * @var int
+     */
+    protected $colorIndex = 0;
+
+    protected $colors = ["#A93226", "#2E86C1", "#7D3C98", "#229954", "#F4D03F", "#D35400", "#7F8C8D", "#2E4053"];
+
     public function getFunctions(): array {
         return [
             new TwigFunction('chart', [$this, 'renderChart'], ['is_safe' => ['html']]),
@@ -22,9 +29,16 @@ class Chart extends AbstractExtension {
 
     public function renderChart($chart, $type = 'bar'): string {
         if ($chart instanceof BarChart) {
-            $labels = json_encode($chart->getLabels(), true);
-            $datasets = json_encode($chart->getDatasets(), true);
+            $datasets = $chart->getDatasets();
             $uniqueId = uniqid("chart-", true);
+
+            //Add colors to the dataset
+            foreach ($datasets as $dataset){
+                $dataset["backgroundColor"] = $this->getColor();
+            }
+
+            $labels = json_encode($chart->getLabels(), true);
+            $datasets = json_encode($datasets, true);
 
             return '
                 <canvas id="'.$uniqueId.'" class="chartjs" width="undefined" height="undefined"></canvas>
@@ -43,5 +57,11 @@ class Chart extends AbstractExtension {
                 </script>
                 ';
         }
+    }
+
+    protected function getColor(){
+        $color = $this->colorIndex % count($this->colors);
+        $this->colorIndex++;
+        return $this->colors[$color];
     }
 }

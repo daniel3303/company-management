@@ -77,7 +77,7 @@ class ProductController extends BaseController {
      * @Route("/{id}/show", name="backend_product_product_show", methods={"GET"})
      */
     public function show(Request $request, Product $product, EntityManagerInterface $entityManager): Response {
-        $year = date("Y");
+        $year = $request->query->getInt("year", null) ?? date("Y");
         //Select expenses sum for a product by month on a given year
         $rawData = $entityManager->createQuery("
             SELECT SUM(item.quantity * item.pricePerUnit) as totalSpent, AVG(item.pricePerUnit) as averagePrice, SUM(item.quantity) as totalSold,
@@ -104,6 +104,7 @@ class ProductController extends BaseController {
         return $this->render('backend/product/product/show.html.twig', [
             'product' => $product,
             'stats' => $chart,
+            'statsYear' => $year,
         ]);
     }
 

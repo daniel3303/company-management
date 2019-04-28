@@ -41,10 +41,27 @@
                             </p>
                         </div>
                     </div>
-
+                    <hr />
                     <div class="row mb-5">
                         <div class="col-12">
+                            <h2 class="fw-300 text-center">Gráfico para o ano {{ statsYear }}</h2>
                             {{ chart(stats) }}
+                            <form action="" method="get">
+                                <div class="form-row justify-content-center">
+                                    <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <input type="number" class="form-control" min="0" step="1" name="year"
+                                                       value="{{ statsYear }}"/>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="submit" class="btn btn-primary">OK</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
