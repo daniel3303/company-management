@@ -27,16 +27,6 @@
         }
     });
 
-    // Scroll to top button appear
-    $(document).on('scroll', function() {
-        var scrollDistance = $(this).scrollTop();
-        if (scrollDistance > 100) {
-            $('.scroll-to-top').fadeIn();
-        } else {
-            $('.scroll-to-top').fadeOut();
-        }
-    });
-
     // Smooth scrolling using jQuery easing
     $(document).on('click', 'a.scroll-to-top', function(e) {
         var $anchor = $(this);
@@ -51,11 +41,37 @@
 /* CUSTOM */
 (function($){
     window.addEventListener("load", function (event) {
-        $("select.form-control").select2({
-            language: "pt",
-            theme: "bootstrap",
-            allowClear: true,
-            placeholder: "Selecione uma opção",
+        apply_select2("select.form-control");
+        //Mutation observer for new select boxes in the DOM
+        var observer = new MutationObserver(function(mutations) {
+            console.log(mutations);
+            //loop through the detected mutations(added controls)
+            mutations.forEach(function(mutation) {
+                //addedNodes contains all detected new controls
+                if (mutation && mutation.addedNodes) {
+                    mutation.addedNodes.forEach(function(elm) {
+                        //only apply select2 to select elements
+                        if (elm && $(elm).has("select.form-control")) {
+                            apply_select2($(elm).find('select.form-control'));
+                        }
+                    });
+                }
+            });
+        });
+
+        // pass in the target node, as well as the observer options
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
         });
     })
 })(jQuery);
+
+function apply_select2(selector) {
+    $(selector).select2({
+        language: "pt",
+        theme: "bootstrap",
+        allowClear: true,
+        placeholder: "Selecione uma opção",
+    });
+}
