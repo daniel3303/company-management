@@ -1,0 +1,37 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}Funcionário {{ employee.name }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Funcionário
+                        {% embed 'backend/component/identifier/employee.html.twig' with {employee: employee} %}{% endembed %}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Nome: </strong>{{ employee.name }}<br />
+                                <strong>Vencimento/Hora: </strong>{{ employee.hourlyWage|number_format(2, ',', '.') }}€<br />
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('backend_employee_employee_index') }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar à lista</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
