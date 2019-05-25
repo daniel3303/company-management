@@ -5,6 +5,10 @@ Company Management Software
 - Mysql 5.7 or higher
 - PHP 7.2 or higher
 
+# Preview
+![Software Preview](https://raw.githubusercontent.com/daniel3303/company-management/master/preview.png)
+
+
 # Installation
     git clone https://github.com/daniel3303/company-management.git
     cd company-management
