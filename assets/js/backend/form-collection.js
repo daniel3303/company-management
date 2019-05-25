@@ -1,3 +1,7 @@
+import $ from 'jquery';
+
+var $collectionHolder;
+
 window.addEventListener("load", function () {
     //Add collection element
     $(".add-collection-element-form").on("click", function (e) {
