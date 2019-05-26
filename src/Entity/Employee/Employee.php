@@ -39,8 +39,23 @@ class Employee {
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Employee\WorkDay", mappedBy="employee", orphanRemoval=true)
+     * @ORM\OrderBy({"day" = "desc"})
      */
     private $workDays;
+
+    /**
+     * @ORM\Column(type="float")
+     * @Assert\NotNull(message="O vencimento por hora extraordinária é obrigatório.")
+     * @Assert\GreaterThanOrEqual(value=0, message="O vencimento por hora extraordinária deve ser igual ou superior a {{ compared_value }}€.")
+     */
+    private $extraHourlyWage;
+
+    /**
+     * @ORM\Column(type="float")
+     * @Assert\NotNull(message="O número de horas de trabalho por dia é obrigatório.")
+     * @Assert\GreaterThanOrEqual(value=0, message="O número de horas de trabalho por dia deve ser igual ou supeior a {{ compared_value }}€.")
+     */
+    private $workingHoursPerDay;
 
     public function __construct() {
         $this->workDays = new ArrayCollection();
@@ -94,6 +109,30 @@ class Employee {
                 $workDay->setEmployee(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getExtraHourlyWage(): ?float
+    {
+        return $this->extraHourlyWage;
+    }
+
+    public function setExtraHourlyWage(float $extraHourlyWage): self
+    {
+        $this->extraHourlyWage = $extraHourlyWage;
+
+        return $this;
+    }
+
+    public function getWorkingHoursPerDay(): ?float
+    {
+        return $this->workingHoursPerDay;
+    }
+
+    public function setWorkingHoursPerDay(float $workingHoursPerDay): self
+    {
+        $this->workingHoursPerDay = $workingHoursPerDay;
 
         return $this;
     }

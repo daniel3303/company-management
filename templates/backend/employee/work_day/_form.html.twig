@@ -1,0 +1,27 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form) }}
+    {{ form_row(form.employee) }}
+    {{ form_row(form.day) }}
+
+    {{ form_row(form.workIntervals) }}
+
+    <button type="button"
+            class="btn btn-danger remove-collection-element-form"
+            data-list-selector="#work_day_workIntervals"><i class="fa fa-times"></i> Remover intervalo
+    </button>
+
+    <button type="button"
+            class="btn btn-success add-collection-element-form"
+            data-list-selector="#work_day_workIntervals"><i class="fa fa-plus"></i> Adicionar intervalo
+    </button>
+
+    <hr />
+
+    {{ form_widget(form) }}
+    <button class="btn btn-success btn-icon-split">
+        <span class="icon text-white-50">
+          <i class="fas fa-check"></i>
+        </span>
+        <span class="text">{{ button_label|default('Guardar') }}</span>
+    </button>
+{{ form_end(form) }}

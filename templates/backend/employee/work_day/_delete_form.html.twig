@@ -1,0 +1,10 @@
+<form method="post" class="d-inline" action="{{ path('backend_employee_work_day_delete', {'id': workDay.id}) }}"
+      onsubmit="return confirm('Tem a certeza que pretende eliminar este dia de trabalho?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ workDay.id) }}">
+    <button class="btn btn-danger btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-trash"></i>
+        </span>
+    </button>
+</form>

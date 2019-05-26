@@ -31,3 +31,4 @@ services:
         class: App\Doctrine\HashPasswordListener
         tags:
             - {name: doctrine.event_subscriber}
+

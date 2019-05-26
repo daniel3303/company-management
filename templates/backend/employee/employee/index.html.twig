@@ -16,7 +16,9 @@
                             <thead>
                                 <tr>
                                     <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Nome", property: "name"} %}{% endembed %}</th>
-                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Vencimento/Hora", property: "hourlyWage"} %}{% endembed %}</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Hora Normal", property: "hourlyWage"} %}{% endembed %}</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Hora Extra", property: "extraHourlyWage"} %}{% endembed %}</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Horas por Dia", property: "workingHoursPerDay"} %}{% endembed %}</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -26,6 +28,8 @@
                                         <td>{% embed 'backend/component/identifier/employee.html.twig'
                                                 with {employee: employee} %}{% endembed %}</td>
                                         <td>{{ employee.hourlyWage|number_format(2, ',', '.') }}€</td>
+                                        <td>{{ employee.extraHourlyWage|number_format(2, ',', '.') }}€</td>
+                                        <td>{{ employee.workingHoursPerDay }}</td>
                                         <td>
                                             <a href="{{ path('backend_employee_employee_edit', {'id': employee.id}) }}"
                                                class="btn btn-info btn-icon-split">
@@ -45,7 +49,9 @@
                             <tfoot>
                                 <tr>
                                     <th>Nome</th>
-                                    <th>Vencimento/Hora</th>
+                                    <th>Hora Normal</th>
+                                    <th>Hora Extra</th>
+                                    <th>Horas por Dia</th>
                                     <th>Acções</th>
                                 </tr>
                             </tfoot>

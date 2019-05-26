@@ -16,16 +16,23 @@ class WorkDayType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('employee', EntityType::class, [
+        /**
+         * @var $entity WorkDay
+         */
+        $entity = $builder->getData();
+
+        $builder->add('employee', EntityType::class, [
                 'class' => Employee::class,
                 'label' => 'Funcionário',
                 'choice_label' => 'name',
             ])
-            ->add('day', DateType::class, ['label' => 'Dia'])
+            ->add('day', DateType::class, [
+                'label' => 'Dia',
+                'widget' => 'single_text',
+            ])
             ->add('workIntervals', CollectionType::class, [
                 'label' => 'Período de Trabalho',
-                'entry_type' => WorkInterval::class,
+                'entry_type' => WorkIntervalType::class,
                 'entry_options' => [
                     'label' => false
                 ],

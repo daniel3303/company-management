@@ -21,6 +21,75 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Dias de trabalho</h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Dia</th>
+                                        <th>Entradas/Saídas</th>
+                                        <th>Tempo</th>
+                                        <th>Total</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for workDay in employee.workDays %}
+                                        <tr>
+                                            <td>{{ workDay.day|date("d-m-Y") }}</td>
+                                            <td>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Entrada</th>
+                                                            <th>Saída</th>
+                                                            <th>Hora</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for workInterval in workDay.workIntervals %}
+                                                            {# @var workInterval \App\Entity\Employee\WorkInterval #}
+                                                        <tr>
+                                                            <td>{{ workInterval.start|date("H:i") }}</td>
+                                                            <td>{{ workInterval.end|date("H:i") }}</td>
+                                                            <td>{{ workInterval.hourlyWage|number_format(2, ',', '.') }}€</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td>{{ workDay.workingTime|date("H") }}h {{ workDay.workingTime|date("i") }}m</td>
+                                            <td>{{ workDay.amountToPay|number_format(2, ',', '.') }}€</td>
+                                            <td>
+                                                <a href="{{ path('backend_employee_work_day_edit', {'id': workDay.id}) }}"
+                                                   class="btn btn-info btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                  <i class="fas fa-edit"></i>
+                                                </span>
+                                                </a>
+                                                {{ include('backend/employee/work_day/_delete_form.html.twig') }}
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5">Não foram encontrados resultados</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Dia</th>
+                                        <th>Entradas/Saídas</th>
+                                        <th>Tempo</th>
+                                        <th>Total</th>
+                                        <th>Acções</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
 
                 </div>
                 <div class="card-footer">

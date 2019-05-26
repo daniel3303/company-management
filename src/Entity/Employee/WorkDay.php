@@ -5,6 +5,7 @@ namespace App\Entity\Employee;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Employee\WorkDayRepository")
@@ -20,22 +21,31 @@ class WorkDay
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotNull(message="O dia é obrigatório")
      */
     private $day;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Employee\Employee", inversedBy="workDays")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull(message="O funcionário é obrigatório.")
      */
     private $employee;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Employee\WorkInterval", mappedBy="workDay", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Employee\WorkInterval", mappedBy="workDay", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"start" = "asc"})
+     * @Assert\Count(
+     *      min = 1,
+     *      minMessage = "Deve adicionar pelo menos um período de trabalho.",
+     * )
+     * @Assert\Valid()
      */
     private $workIntervals;
 
     public function __construct()
     {
+        $this->setDay(new \DateTime("now"));
         $this->workIntervals = new ArrayCollection();
     }
 
@@ -65,7 +75,43 @@ class WorkDay
     {
         $this->employee = $employee;
 
+        foreach ($this->getWorkIntervals() as $interval){
+            if($interval->getHourlyWage() === null){
+                $interval->setHourlyWage($employee->getHourlyWage());
+            }
+        }
+
         return $this;
+    }
+
+    public function getWorkingTime(): \DateTime{
+        $time = new \DateTime('00:00');
+
+        foreach ($this->getWorkIntervals() as $workInterval){
+            $time->add($workInterval->getDuration());
+        }
+
+        return $time;
+    }
+
+    public function getAmountToPay() : float {
+        $total = 0.0;
+
+        foreach ($this->getWorkIntervals() as $workInterval){
+            $total += $workInterval->getAmountToPay();
+        }
+
+        return $total;
+    }
+
+    public function getTotalHoursWorked() : float {
+        $total = 0.0;
+
+        foreach ($this->getWorkIntervals() as $workInterval){
+            $total += $workInterval->getHoursWorked();
+        }
+
+        return $total;
     }
 
     /**
