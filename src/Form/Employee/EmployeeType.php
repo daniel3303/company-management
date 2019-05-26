@@ -16,7 +16,10 @@ class EmployeeType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('name', TextType::class, ['label' => 'Nome'])
-            ->add('workingHoursPerDay', NumberType::class, ['label' => 'Horas de trabalho obrigatórias'])
+            ->add('workingHoursPerDay', NumberType::class, [
+                'label' => 'Horas de trabalho obrigatórias',
+                'help' => 'Normalmente 8h de trabalho diárias.'
+            ])
             ->add('hourlyWage', MoneyType::class, ['label' => 'Salário por hora normal'])
             ->add('extraHourlyWage', MoneyType::class, ['label' => 'Salário por hora extraordinária'])
 
