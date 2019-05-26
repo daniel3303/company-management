@@ -17,8 +17,9 @@ class EmployeeType extends AbstractType {
         $builder
             ->add('name', TextType::class, ['label' => 'Nome'])
             ->add('workingHoursPerDay', NumberType::class, ['label' => 'Horas de trabalho obrigatórias'])
-            ->add('extraHourlyWage', MoneyType::class, ['label' => 'Salário por hora extraordinária'])
             ->add('hourlyWage', MoneyType::class, ['label' => 'Salário por hora normal'])
+            ->add('extraHourlyWage', MoneyType::class, ['label' => 'Salário por hora extraordinária'])
+
         ;
     }
 

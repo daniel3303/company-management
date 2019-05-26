@@ -93,7 +93,7 @@ class WorkInterval {
         return $this->hourlyWage;
     }
 
-    public function setHourlyWage(float $hourlyWage): self {
+    public function setHourlyWage(?float $hourlyWage): self {
         $this->hourlyWage = $hourlyWage;
 
         return $this;
