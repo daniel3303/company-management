@@ -3,6 +3,7 @@
 namespace App\Controller\Employee;
 
 use App\Controller\Backend\BaseController;
+use App\Entity\Employee\Employee;
 use App\Entity\Employee\WorkDay;
 use App\Event\WorkDayCreatedEvent;
 use App\Event\WorkDayUpdatedEvent;
@@ -74,7 +75,7 @@ class WorkDayController extends BaseController {
         $start = $request->get("start", null);
         $end = $request->get("end", null);
 
-        if($start !== null && $end !== null){
+        if ($start !== null && $end !== null) {
             return $this->redirectToRoute("backend_employee_work_day_show_map", [
                 'start' => $start,
                 'end' => $end
@@ -88,10 +89,40 @@ class WorkDayController extends BaseController {
      * @Route("/show/{start}/{end}", defaults={"start"=null, "end"=null}, name="backend_employee_work_day_show_map", methods={"GET"})
      */
     public function showMap(\DateTime $start, \DateTime $end, EmployeeRepository $employeeRepository): Response {
+        $MAX_INTERVAL_DAYS = 90;
+
+        /**
+         * @var $employees Employee[]
+         */
         $employees = $employeeRepository->findAllWithPaginator('name', 'asc');
-        $end->setTime(0,0,1); //minor fix to make dateperiod include the end date
+        $end->setTime(0, 0, 1); //minor fix to make dateperiod include the end date
+
+        // Checks if the interval is bigger than $MAX_INTERVAL_DAYS days
+        if ($end->diff($start)->days > $MAX_INTERVAL_DAYS) {
+            $end->setTimestamp($start->getTimestamp() + $MAX_INTERVAL_DAYS * 24 * 60 * 60);
+            $this->addFlash("warning", "O periodo máximo de vizualização permitido é de " . $MAX_INTERVAL_DAYS . " dias.");
+        }
+
+        // Maps stats
+        $hoursPerEmployee = [];
+        foreach ($employees as $employee){
+            $hoursPerEmployee[$employee->getId()] = [];
+            $hours = &$hoursPerEmployee[$employee->getId()];
+            $workDays = $employee->getWorkDaysBetween($start, $end);
+
+            foreach ($workDays as $workDay){
+                foreach ($workDay->getWorkIntervals() as $workInterval){
+                    if(isset($hours[$workInterval->getHourlyWage()])){
+                        $hours[$workInterval->getHourlyWage()] += $workInterval->getHoursWorked();
+                    }else{
+                        $hours[$workInterval->getHourlyWage()] = $workInterval->getHoursWorked();
+                    }
+                }
+            }
+        }
 
         return $this->render('backend/employee/work_day/show_map.html.twig', [
+            'hoursPerEmployee' => $hoursPerEmployee,
             'employees' => $employees,
             'startDay' => $start,
             'endDay' => $end,

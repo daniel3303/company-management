@@ -28,6 +28,7 @@
                                                 {% endif %}
                                             {% endfor %}
                                             <th>Horas</th>
+                                            <th>Total Horas</th>
                                             <th>Total</th>
                                         </tr>
                                     </thead>
@@ -40,16 +41,17 @@
                                                 {% set workDays = employee.workDaysBetween(startDay, endDay) %}
                                                 {% set index = 0 %}
                                                 {% set len = workDays|length %}
-                                                {% set hours = 0 %}
+                                                {% set totalHours = 0 %}
                                                 {% set total = 0 %}
                                                 {% for day in datePeriod(startDay, endDay, "1 day") %}
                                                     <td>
                                                         {% if index < len %}
                                                             {% set workDay = workDays[index] %}
                                                             {% if workDay.day == day %}
-                                                                {% set hours = hours + workDay.getTotalHoursWorked() %}
+                                                                {% set totalHours = totalHours + workDay.getTotalHoursWorked() %}
                                                                 {% set total = total + workDay.getAmountToPay() %}
                                                                 {{ workDay.workingTime|date("H:i") }}h
+
                                                                 {% set index = index + 1 %}
                                                             {% else %}
                                                                 -
@@ -59,7 +61,15 @@
                                                         {% endif %}
                                                     </td>
                                                 {% endfor %}
-                                                <td><strong>{{ hours}}</strong></td>
+                                                <td>
+                                                    {% for price, hour in hoursPerEmployee[employee.id] %}
+                                                        {{ hour }} x {{ price|number_format(2, ',', '.') }}€<br/>
+                                                        {% if not loop.last %}
+                                                            <hr/>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </td>
+                                                <td><strong>{{ totalHours }}</strong></td>
                                                 <td><strong>{{ total|number_format(2, ',', '.') }}€</strong></td>
                                             </tr>
                                         {% endfor %}
@@ -75,6 +85,7 @@
                                                 {% endif %}
                                             {% endfor %}
                                             <th>Horas</th>
+                                            <th>Total Horas</th>
                                             <th>Total</th>
                                         </tr>
                                     </tfoot>
@@ -91,10 +102,12 @@
                                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                                     <form action="{{ path('backend_employee_work_day_show') }}" class="form-horizontal">
                                         <div class="form-group">
-                                            <input type="date" class="form-control" name="start" value="{{ startDay|date("Y-m-d") }}" placeholder="Início"/>
+                                            <input type="date" class="form-control" name="start"
+                                                   value="{{ startDay|date("Y-m-d") }}" placeholder="Início"/>
                                         </div>
                                         <div class="form-group">
-                                            <input type="date" class="form-control" name="end" value="{{ endDay|date("Y-m-d") }}" placeholder="Fim"/>
+                                            <input type="date" class="form-control" name="end"
+                                                   value="{{ endDay|date("Y-m-d") }}" placeholder="Fim"/>
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">OK</button>

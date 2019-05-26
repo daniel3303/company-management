@@ -50,7 +50,15 @@ class WorkDay {
      */
     private $workIntervals;
 
+    /**
+     * @ORM\Column(type="string", length=1048)
+     * @Assert\NotNull()
+     * @Assert\Length(max="1048", maxMessage="As notas podem ter no máximo {{ limit }} caracteres.")
+     */
+    private $note;
+
     public function __construct() {
+        $this->setNote("");
         $this->setDay(new \DateTime("now"));
         $this->workIntervals = new ArrayCollection();
     }
@@ -139,6 +147,18 @@ class WorkDay {
                 $workInterval->setWorkDay(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    public function setNote(string $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }

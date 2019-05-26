@@ -93,6 +93,11 @@ class Employee {
         return $this->workDays;
     }
 
+    /**
+     * @param \DateTime $start
+     * @param \DateTime $end
+     * @return WorkDay[]|Collection
+     */
     public function getWorkDaysBetween(\DateTime $start, \DateTime $end) : Collection{
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->gte('day', $start))
