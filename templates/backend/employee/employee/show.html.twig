@@ -51,8 +51,13 @@
                                                         {% for workInterval in workDay.workIntervals %}
                                                             {# @var workInterval \App\Entity\Employee\WorkInterval #}
                                                         <tr>
-                                                            <td>{{ workInterval.start|date("H:i") }}</td>
-                                                            <td>{{ workInterval.end|date("H:i") }}</td>
+                                                            <td>{{ workInterval.start|date("H:i") }}h</td>
+                                                            <td>
+                                                                {% if workInterval.end.format("d-m-Y") != workDay.day.format("d-m-Y") %}
+                                                                    {{ workInterval.end|date("d-m-Y") }} às
+                                                                {% endif %}
+                                                                {{ workInterval.end|date("H:i") }}h
+                                                            </td>
                                                             <td>{{ workInterval.hourlyWage|number_format(2, ',', '.') }}€</td>
                                                         </tr>
                                                         {% endfor %}
