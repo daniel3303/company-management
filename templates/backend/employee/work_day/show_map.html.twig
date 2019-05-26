@@ -1,0 +1,121 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}Mapa de horas de {{ startDay|date("d-m-Y") }} a {{ endDay|date("d-m-Y") }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        Mapa de horas de {{ startDay|date("d-m-Y") }} a {{ endDay|date("d-m-Y") }}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Mapa de horas</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Funcionário</th>
+                                            {% for day in datePeriod(startDay, endDay, "1 day") %}
+                                                {% if startDay|date("Y") == endDay|date("Y") %}
+                                                    <th>{{ day|date("d/m") }}</th>
+                                                {% else %}
+                                                    <th>{{ day|date("d/m/Y") }}</th>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <th>Horas</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for employee in employees %}
+                                            <tr>
+                                                <td>{% embed 'backend/component/identifier/employee.html.twig' with {'employee': employee} %}{% endembed %}</td>
+
+
+                                                {% set workDays = employee.workDaysBetween(startDay, endDay) %}
+                                                {% set index = 0 %}
+                                                {% set len = workDays|length %}
+                                                {% set hours = 0 %}
+                                                {% set total = 0 %}
+                                                {% for day in datePeriod(startDay, endDay, "1 day") %}
+                                                    <td>
+                                                        {% if index < len %}
+                                                            {% set workDay = workDays[index] %}
+                                                            {% if workDay.day == day %}
+                                                                {% set hours = hours + workDay.getTotalHoursWorked() %}
+                                                                {% set total = total + workDay.getAmountToPay() %}
+                                                                {{ workDay.workingTime|date("H:i") }}h
+                                                                {% set index = index + 1 %}
+                                                            {% else %}
+                                                                -
+                                                            {% endif %}
+                                                        {% else %}
+                                                            -
+                                                        {% endif %}
+                                                    </td>
+                                                {% endfor %}
+                                                <td><strong>{{ hours}}</strong></td>
+                                                <td><strong>{{ total|number_format(2, ',', '.') }}€</strong></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Funcionário</th>
+                                            {% for day in datePeriod(startDay, endDay, "1 day") %}
+                                                {% if startDay|date("Y") == endDay|date("Y") %}
+                                                    <th>{{ day|date("d/m") }}</th>
+                                                {% else %}
+                                                    <th>{{ day|date("d/m/Y") }}</th>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <th>Horas</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Selecione o periodo a mostrar</h3>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                                    <form action="{{ path('backend_employee_work_day_show') }}" class="form-horizontal">
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" name="start" value="{{ startDay|date("Y-m-d") }}" placeholder="Início"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" name="end" value="{{ endDay|date("Y-m-d") }}" placeholder="Fim"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">OK</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--<div class="card-footer">
+                    <a href="{{ path('backend_employee_employee_index') }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar à lista</span>
+                    </a>
+                </div>-->
+            </div>
+        </div>
+    </div>
+{% endblock %}

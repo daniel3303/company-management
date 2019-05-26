@@ -3,7 +3,9 @@
 namespace App\Repository\Employee;
 
 use App\Entity\Employee\WorkDay;
+use App\Repository\BaseRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -12,39 +14,25 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method WorkDay[]    findAll()
  * @method WorkDay[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WorkDayRepository extends ServiceEntityRepository
-{
-    public function __construct(RegistryInterface $registry)
-    {
+class WorkDayRepository extends BaseRepository {
+    public function __construct(RegistryInterface $registry) {
         parent::__construct($registry, WorkDay::class);
     }
 
-    // /**
-    //  * @return WorkDay[] Returns an array of WorkDay objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function findAllBetween(?\DateTime $start, \DateTime $end): Paginator {
+        $queryBuilder = $this->createQueryBuilder("wd")->select("wd");
 
-    /*
-    public function findOneBySomeField($value): ?WorkDay
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if($start !== null){
+            $queryBuilder->andWhere("wd.day >= :start")->setParameter(":start", $start);
+        }
+
+        if($end !== null){
+            $queryBuilder->andWhere("wd.day <= :end")->setParameter(":end", $end);
+        }
+
+        $queryBuilder->orderBy("wd.day", "desc");
+
+        return new Paginator($queryBuilder);
     }
-    */
+
 }

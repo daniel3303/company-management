@@ -4,6 +4,7 @@ namespace App\Entity\Employee;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -90,6 +91,15 @@ class Employee {
      */
     public function getWorkDays(): Collection {
         return $this->workDays;
+    }
+
+    public function getWorkDaysBetween(\DateTime $start, \DateTime $end) : Collection{
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->gte('day', $start))
+            ->andWhere(Criteria::expr()->lte('day', $end))
+            ->orderBy(["day" => 'asc']);
+
+        return $this->workDays->matching($criteria);
     }
 
     public function addWorkDay(WorkDay $workDay): self {
