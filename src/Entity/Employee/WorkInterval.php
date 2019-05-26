@@ -4,6 +4,7 @@ namespace App\Entity\Employee;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 /**
@@ -19,13 +20,16 @@ class WorkInterval {
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      * @Assert\NotNull(message="A hora de entrada é obrigatória.")
      */
     private $start;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      * @Assert\NotNull(message="A hora de saída é obrigatória.")
+     * @Assert\GreaterThan(message="O fim do intervalo de trabalho deve ser depois do início.", propertyPath="start")
      */
     private $end;
 
@@ -107,5 +111,24 @@ class WorkInterval {
         $this->workDay = $workDay;
 
         return $this;
+    }
+
+    /**
+     * @Assert\Callback()
+     */
+    public static function validate(WorkInterval $workInterval, ExecutionContextInterface $context, $payload) {
+        $workDay = $workInterval->getWorkDay();
+
+        // checks if the start of the interval is in the same day as the workDay
+        if($workDay->getDay()->format("d-m-Y") !== $workInterval->getStart()->format("d-m-Y")){
+            $context->buildViolation("O início do intervalo de trabalho deve ser em ".$workDay->getDay()->format("d-m-Y").".")
+                ->atPath("start")->addViolation();
+        }
+
+        //checks if the working interval is less or equal to 24hours
+        if($workInterval->getEnd()->getTimestamp() - $workInterval->getStart()->getTimestamp() > 24*60*60){
+            $context->buildViolation("O intervalo de trabalho pode no máximo ter 24h.")
+                ->atPath("end")->addViolation();
+        }
     }
 }

@@ -5,13 +5,20 @@ namespace App\Entity\Employee;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Employee\WorkDayRepository")
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"employee_id", "day"})})
+ * @UniqueEntity(
+ *     fields={"employee", "day"},
+ *     message="Este dia de trabalho já está registado para este funcionário.",
+ *     errorPath="day",
+ * )
  */
-class WorkDay
-{
+class WorkDay {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -43,40 +50,34 @@ class WorkDay
      */
     private $workIntervals;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->setDay(new \DateTime("now"));
         $this->workIntervals = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getDay(): ?\DateTimeInterface
-    {
+    public function getDay(): ?\DateTimeInterface {
         return $this->day;
     }
 
-    public function setDay(\DateTimeInterface $day): self
-    {
+    public function setDay(\DateTimeInterface $day): self {
         $this->day = $day;
 
         return $this;
     }
 
-    public function getEmployee(): ?Employee
-    {
+    public function getEmployee(): ?Employee {
         return $this->employee;
     }
 
-    public function setEmployee(?Employee $employee): self
-    {
+    public function setEmployee(?Employee $employee): self {
         $this->employee = $employee;
 
-        foreach ($this->getWorkIntervals() as $interval){
-            if($interval->getHourlyWage() === null){
+        foreach ($this->getWorkIntervals() as $interval) {
+            if ($interval->getHourlyWage() === null) {
                 $interval->setHourlyWage($employee->getHourlyWage());
             }
         }
@@ -84,30 +85,30 @@ class WorkDay
         return $this;
     }
 
-    public function getWorkingTime(): \DateTime{
+    public function getWorkingTime(): \DateTime {
         $time = new \DateTime('00:00');
 
-        foreach ($this->getWorkIntervals() as $workInterval){
+        foreach ($this->getWorkIntervals() as $workInterval) {
             $time->add($workInterval->getDuration());
         }
 
         return $time;
     }
 
-    public function getAmountToPay() : float {
+    public function getAmountToPay(): float {
         $total = 0.0;
 
-        foreach ($this->getWorkIntervals() as $workInterval){
+        foreach ($this->getWorkIntervals() as $workInterval) {
             $total += $workInterval->getAmountToPay();
         }
 
         return $total;
     }
 
-    public function getTotalHoursWorked() : float {
+    public function getTotalHoursWorked(): float {
         $total = 0.0;
 
-        foreach ($this->getWorkIntervals() as $workInterval){
+        foreach ($this->getWorkIntervals() as $workInterval) {
             $total += $workInterval->getHoursWorked();
         }
 
@@ -117,13 +118,11 @@ class WorkDay
     /**
      * @return Collection|WorkInterval[]
      */
-    public function getWorkIntervals(): Collection
-    {
+    public function getWorkIntervals(): Collection {
         return $this->workIntervals;
     }
 
-    public function addWorkInterval(WorkInterval $workInterval): self
-    {
+    public function addWorkInterval(WorkInterval $workInterval): self {
         if (!$this->workIntervals->contains($workInterval)) {
             $this->workIntervals[] = $workInterval;
             $workInterval->setWorkDay($this);
@@ -132,8 +131,7 @@ class WorkDay
         return $this;
     }
 
-    public function removeWorkInterval(WorkInterval $workInterval): self
-    {
+    public function removeWorkInterval(WorkInterval $workInterval): self {
         if ($this->workIntervals->contains($workInterval)) {
             $this->workIntervals->removeElement($workInterval);
             // set the owning side to null (unless already changed)
