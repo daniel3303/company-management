@@ -21,7 +21,7 @@ class OperationType {
     /**
      * @ORM\Column(type="string", length=256)
      * @Assert\NotNull(message="O nome é obrigatório.")
-     * @Assert\Length(max=256, message="O nome é pode ter no máximo 256 caracteres.")
+     * @Assert\Length(max=256, maxMessage="O nome é pode ter no máximo 256 caracteres.")
      */
     private $name;
 
