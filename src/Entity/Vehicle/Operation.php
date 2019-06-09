@@ -47,6 +47,7 @@ class Operation
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotNull(message="A data é obrigatória.")
      */
     private $date;
 
