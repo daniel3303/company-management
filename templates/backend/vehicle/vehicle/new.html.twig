@@ -1,0 +1,25 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}Criar novo veículo{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Criar novo veículo</h6>
+                </div>
+                <div class="card-body">
+                    {{ include('backend/vehicle/vehicle/_form.html.twig') }}
+                    <hr />
+                    <a href="{{ path('backend_vehicle_vehicle_index') }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar à lista</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

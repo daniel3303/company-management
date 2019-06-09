@@ -1,0 +1,88 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}{{ vehicle.model }} | {{ vehicle.plate }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Veículo
+                        {% embed 'backend/component/identifier/vehicle.html.twig' with {vehicle: vehicle} %}{% endembed %}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Modelo: </strong>{{ vehicle.model }}<br />
+                                <strong>Matrícula: </strong>{{ vehicle.plate }}<br />
+                                <strong>Ano: </strong>{{ vehicle.year }}<br />
+                                <strong>Notas: </strong>{{ vehicle.notes is empty ? "Nenhuma nota." : vehicle.notes }}<br />
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Operações</h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Valor</th>
+                                        <th>Data</th>
+                                        <th>Notas</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for operation in vehicle.operations %}
+                                        <tr>
+                                            <td>{{ operation.operationType.name }}</td>
+                                            <td>{{ operation.price|number_format(2, ',', '.') }}€</td>
+                                            <td>{{ operation.date|date("d-m-Y") }}€</td>
+                                            <td>{{ operation.notes }}</td>
+                                            <td>
+                                                <a href="{{ path('backend_vehicle_operation_edit', {'id': operation.id}) }}"
+                                                   class="btn btn-info btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                  <i class="fas fa-edit"></i>
+                                                </span>
+                                                </a>
+                                                {{ include('backend/vehicle/operation/_delete_form.html.twig') }}
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5">Não foram encontrados resultados</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Valor</th>
+                                        <th>Data</th>
+                                        <th>Notas</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('backend_vehicle_vehicle_index') }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar à lista</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

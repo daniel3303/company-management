@@ -51,6 +51,7 @@ class Vehicle {
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Vehicle\Operation", mappedBy="vehicle", orphanRemoval=true)
+     * @ORM\OrderBy({"date" = "desc"})
      */
     private $operations;
 
