@@ -19,8 +19,8 @@ class VehicleController extends BaseController
     /**
      * @Route("/", name="backend_vehicle_vehicle_index", methods={"GET"})
      */
-    public function index(VehicleRepository $employeeRepository, Request $request): Response {
-        $vehicles = $this->paginateWithSorting($employeeRepository, $request);
+    public function index(VehicleRepository $vehicleRepository, Request $request): Response {
+        $vehicles = $this->paginateWithSorting($vehicleRepository, $request);
         /** @var $vehicles Vehicle[]|Pagerfanta */
 
         return $this->render('backend/vehicle/vehicle/index.html.twig', [
