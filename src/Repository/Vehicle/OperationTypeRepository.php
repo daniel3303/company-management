@@ -3,6 +3,7 @@
 namespace App\Repository\Vehicle;
 
 use App\Entity\Vehicle\OperationType;
+use App\Repository\BaseRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,7 +13,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method OperationType[]    findAll()
  * @method OperationType[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class OperationTypeRepository extends ServiceEntityRepository
+class OperationTypeRepository extends BaseRepository
 {
     public function __construct(RegistryInterface $registry)
     {
