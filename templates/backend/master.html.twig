@@ -134,15 +134,15 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('backend_vehicle_operation_type_index') }}">
-                <i class="fas fa-fw fa-tools"></i>
-                <span>Tipos de Operações</span></a>
-        </li>
-
-        <li class="nav-item">
             <a class="nav-link" href="{{ path('backend_vehicle_operation_index') }}">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>Operações</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('backend_vehicle_operation_type_index') }}">
+                <i class="fas fa-fw fa-tools"></i>
+                <span>Tipos de Operações</span></a>
         </li>
 
         <!-- Sidebar Toggler (Sidebar) -->
@@ -178,8 +178,11 @@
                             <img class="img-profile rounded-circle" src="{{ asset('build/images/backend/avatar.png') }}">
                         </a>
                         <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{{ path('backend_user_change_password') }}">
+                                <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Alterar Senha
+                            </a>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Terminar Sessão
