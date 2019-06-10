@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\BackendEmployee;
+namespace App\Controller\Backend\Employee;
 
 use App\Controller\Backend\BaseController;
 use App\Entity\Employee\Employee;
