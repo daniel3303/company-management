@@ -1,0 +1,10 @@
+<form method="post" class="d-inline" action="{{ path('backend_vehicle_operation_delete', {'id': operation.id}) }}"
+      onsubmit="return confirm('Tem a certeza que deseja eliminar esta operação?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ operation.id) }}">
+    <button class="btn btn-danger btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-trash"></i>
+        </span>
+    </button>
+</form>

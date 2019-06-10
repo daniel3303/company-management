@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<title>Operation</title>
+
+{% block body %}
+    <h1>Operation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ operation.id }}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{ operation.notes }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ operation.price }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ operation.date ? operation.date|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('vehicle_operation_index') }}">back to list</a>
+
+    <a href="{{ path('vehicle_operation_edit', {'id': operation.id}) }}">edit</a>
+
+    {{ include('vehicle_operation/_delete_form.html.twig') }}
+{% endblock %}

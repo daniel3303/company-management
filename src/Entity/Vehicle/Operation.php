@@ -51,6 +51,10 @@ class Operation
      */
     private $date;
 
+    public function __construct() {
+        $this->setDate(new \DateTime());
+    }
+
     public function getId(): ?int
     {
         return $this->id;

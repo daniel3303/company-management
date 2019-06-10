@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backend/vehicle/operation/type")
+ * @Route("/backend/vehicle/operation-type")
  */
 class OperationTypeController extends BaseController
 {
