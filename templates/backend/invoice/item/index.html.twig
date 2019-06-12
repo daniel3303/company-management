@@ -1,0 +1,85 @@
+{% extends 'backend/master.html.twig' %}
+{% block title %}Listagem de compras por produto{% endblock %}
+{% block contentTitle %}Listagem de compras por produto{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Listagem de compras por produto</h6>
+                </div>
+                <div class="card-body">
+                    {% embed 'backend/component/pagination/header.html.twig' with {paginator: items, filters: true} %}{% endembed %}
+                    {{ include('backend/invoice/item/filters.html.twig') }}
+
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Vendedor</th>
+                                    <th>Comprador</th>
+                                    <th>Produto</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Quantidade", property: "quantity"} %}{% endembed %}</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Preço por Unidade", property: "pricePerUnit"} %}{% endembed %}</th>
+                                    <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Refúgo", property: "waste"} %}{% endembed %}</th>
+                                    <th>Data</th>
+                                    <th>Fatura</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                    <tr>
+                                        <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                with {company: item.invoice.issuer} %}{% endembed %}</td>
+                                        <td>{% embed 'backend/component/identifier/company.html.twig'
+                                                with {company: item.invoice.client} %}{% endembed %}</td>
+                                        <td>{% embed 'backend/component/identifier/product.html.twig'
+                                                with {product: item.product} %}{% endembed %}</td>
+                                        <td>{{ item.quantity|number_format(2, ".", ".") }}{{ item.product.unit }}</td>
+                                        <td>{{ item.pricePerUnit|number_format(2, ".", ".") }}€</td>
+                                        <td>{{ item.waste|number_format(2, ".", ".") }}{{ item.product.unit }}</td>
+                                        <td>{{ item.invoice.date|date("d-m-Y") }}</td>
+                                        <td>{% embed 'backend/component/identifier/invoice.html.twig'
+                                                with {invoice: item.invoice} %}{% endembed %}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5">Não foram encontrados resultados</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Vendedor</th>
+                                    <th>Comprador</th>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th>Preço por Unidade</th>
+                                    <th>Refúgo</th>
+                                    <th>Data</th>
+                                    <th>Fatura</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        {% embed 'backend/component/pagination/footer.html.twig' with {paginator: items} %}{% endembed %}
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <a href="{{ path('backend_invoice_invoice_new') }}"
+                       class="btn btn-success btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-plus"></i>
+                        </span>
+                        <span class="text">Criar nova</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
