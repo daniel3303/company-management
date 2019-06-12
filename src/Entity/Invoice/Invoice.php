@@ -37,7 +37,7 @@ class Invoice {
     private $number;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      * @Assert\NotNull(message="O campo data é obrigatório.")
      */
     private $date;

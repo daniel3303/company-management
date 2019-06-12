@@ -27,7 +27,7 @@
                                         <td>{% embed 'backend/component/identifier/company.html.twig'
                                                 with {company: company} %}{% endembed %}</td>
                                         <td>{{ company.nif }}</td>
-                                        <td>{{ company.address}}</td>
+                                        <td>{{ company.address }}</td>
                                         <td>
                                             <a href="{{ path('backend_company_company_edit', {'id': company.id}) }}"
                                                class="btn btn-info btn-icon-split">

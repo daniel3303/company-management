@@ -2,6 +2,8 @@
 
 namespace App\Repository\Company;
 
+use App\Doctrine\Filter\Filter;
+use App\Doctrine\Filter\FilterCollection;
 use App\Entity\Company\Company;
 use App\Entity\User;
 use App\Repository\BaseRepository;

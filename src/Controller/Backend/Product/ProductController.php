@@ -7,6 +7,7 @@ use App\Chart\Type\Bar\BarChart;
 use App\Controller\Backend\BaseController;
 use App\Entity\Product\Product;
 use App\Form\Product\ProductType;
+use App\Repository\Company\CompanyRepository;
 use App\Repository\Product\ProductRepository;
 use App\Util\Month;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -22,10 +23,11 @@ class ProductController extends BaseController {
     /**
      * @Route("/", name="backend_product_product_index", methods={"GET"})
      */
-    public function index(ProductRepository $productRepository, Request $request): Response {
+    public function index(ProductRepository $productRepository, CompanyRepository $companyRepository, Request $request): Response {
         $products = $this->paginateWithSorting($productRepository, $request);
         return $this->render('backend/product/product/index.html.twig', [
             'products' => $products,
+            'companies' => $companyRepository->findAll(),
         ]);
     }
 

@@ -9,7 +9,9 @@
 namespace App\Repository;
 
 
+use App\Doctrine\Filter\FilterInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,7 +21,7 @@ abstract class BaseRepository extends ServiceEntityRepository{
     }
 
 
-    public function findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null): Paginator {
+    public function findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null, ?FilterInterface $filter = null): Paginator {
         $validProperty = false;
 
         //Check the order is valid. If not assigns asc by default
@@ -35,9 +37,17 @@ abstract class BaseRepository extends ServiceEntityRepository{
         }
 
         $query = $this->createQueryBuilder("o")->select("o");
+
+        // if a filter or filter collection is provided
+        if($filter !== null){
+            $filter->filterQuery($query, "o");
+        }
+
+        // set the ordering
         if($validProperty){
             $query = $query->orderBy("o.".$orderProperty, $order);
         }
+
         return new Paginator($query);
     }
 }

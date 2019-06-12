@@ -5,6 +5,7 @@ namespace App\Controller\Backend\Payment;
 use App\Controller\Backend\BaseController;
 use App\Entity\Payment\Payment;
 use App\Form\Payment\PaymentType;
+use App\Repository\Company\CompanyRepository;
 use App\Repository\Payment\PaymentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,11 @@ class PaymentController extends BaseController {
     /**
      * @Route("/", name="backend_payment_payment_index", methods={"GET"})
      */
-    public function index(PaymentRepository $paymentRepository, Request $request): Response {
+    public function index(PaymentRepository $paymentRepository, CompanyRepository $companyRepository, Request $request): Response {
         $payments = $this->paginateWithSorting($paymentRepository, $request);
         return $this->render('backend/payment/payment/index.html.twig', [
             'payments' => $payments,
+            'companies' => $companyRepository->findAll(),
         ]);
     }
 

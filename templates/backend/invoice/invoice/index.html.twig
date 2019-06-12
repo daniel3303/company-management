@@ -10,7 +10,10 @@
                     <h6 class="m-0 font-weight-bold text-primary">Listagem de faturas</h6>
                 </div>
                 <div class="card-body">
-                    {% embed 'backend/component/pagination/header.html.twig' with {paginator: invoices} %}{% endembed %}
+                    {% embed 'backend/component/pagination/header.html.twig' with {paginator: invoices, filters: true} %}{% endembed %}
+                    {{ include('backend/invoice/invoice/filters.html.twig') }}
+
+
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>

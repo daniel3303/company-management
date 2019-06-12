@@ -3,6 +3,7 @@
 namespace App\Controller\Backend\Company;
 
 use App\Controller\Backend\BaseController;
+use App\Doctrine\Filter\FilterCollection;
 use App\Entity\Company\Company;
 use App\Entity\User;
 use App\Form\Company\CompanyType;
@@ -24,6 +25,7 @@ class CompanyController extends BaseController {
     public function index(CompanyRepository $companyRepository, Request $request): Response {
         /** @var $companies Company[]|Pagerfanta */
         $companies = $this->paginateWithSorting($companyRepository, $request);
+
         return $this->render('backend/company/company/index.html.twig', [
             'companies' => $companies,
         ]);

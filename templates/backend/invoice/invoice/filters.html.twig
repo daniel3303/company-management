@@ -1,0 +1,108 @@
+<!-- filters -->
+{% set filter = app.request.get("filter") %}
+<div id="filters" class="collapse my-4 {{ filter is not empty ? "show" : "" }}">
+    <form method="get">
+        <div class="row">
+            <div class="col mb-2">
+                <input type="text" disabled class="form-control" value="Emissor">
+                <input type="hidden" name="filter[0][path]" value="issuer">
+            </div>
+            <div class="col mb-2">
+                <select class="form-control" name="filter[0][comparator]">
+                    <option value="=" {{ filter["0"]["comparator"] is defined and filter["0"]["comparator"] == "=" ? "selected": "" }}>igual a</option>
+                    <option value="!=" {{ filter["0"]["comparator"] is defined and filter["0"]["comparator"] == "!=" ? "selected": "" }}>diferente de</option>
+                </select>
+            </div>
+            <div class="col mb-2">
+                <select class="form-control" name="filter[0][value]">
+                    <option value=""></option>
+                    {% for company in companies %}
+                        <option value="{{ company.id }}" {{ filter["0"]["value"] is defined and filter["0"]["value"] == company.id ? "selected": "" }}>{{ company.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-2">
+                <input type="text" disabled class="form-control" value="Cliente">
+                <input type="hidden" name="filter[1][path]" value="client">
+            </div>
+            <div class="col mb-2">
+                <select class="form-control" name="filter[1][comparator]">
+                    <option value="=" {{ filter["1"]["comparator"] is defined and filter["1"]["comparator"] == "=" ? "selected": "" }}>igual a</option>
+                    <option value="!=" {{ filter["1"]["comparator"] is defined and filter["1"]["comparator"] == "!=" ? "selected": "" }}>diferente de</option>
+                </select>
+            </div>
+            <div class="col mb-2">
+                <select class="form-control" name="filter[1][value]">
+                    <option value=""></option>
+                    {% for company in companies %}
+                        <option value="{{ company.id }}" {{ filter["1"]["value"] is defined and filter["1"]["value"] == company.id ? "selected": "" }}>{{ company.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-2">
+                <input type="text" disabled class="form-control" value="Data da Fatura">
+                <input type="hidden" name="filter[2][path]" value="date">
+            </div>
+            <div class="col mb-2">
+                <select class="form-control" name="filter[2][comparator]">
+                    <option value="=" {{ filter["2"]["comparator"] is defined and filter["2"]["comparator"] == "=" ? "selected": "" }}>igual a</option>
+                    <option value=">" {{ filter["2"]["comparator"] is defined and filter["2"]["comparator"] == ">" ? "selected": "" }}>depois de</option>
+                    <option value="<" {{ filter["2"]["comparator"] is defined and filter["2"]["comparator"] == "<" ? "selected": "" }}>antes de</option>
+                </select>
+            </div>
+            <div class="col mb-2">
+                <input type="date" class="form-control" name="filter[2][value]" value="{{ filter["2"]["value"] is defined ? filter["2"]["value"] : "" }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-2">
+                <input type="text" disabled class="form-control" value="Contém o produto">
+                <input type="hidden" name="filter[3][path]" value="items.product">
+            </div>
+            <div class="col mb-2">
+                <select class="form-control" name="filter[3][comparator]">
+                    <option value="=" {{ filter["3"]["comparator"] is defined and filter["3"]["comparator"] == "=" ? "selected": "" }}>igual a</option>
+                    <option value="!=" {{ filter["3"]["comparator"] is defined and filter["3"]["comparator"] == "!=" ? "selected": "" }}>diferente de</option>
+                </select>
+            </div>
+            <div class="col mb-2">
+                <select class="form-control" name="filter[3][value]">
+                    <option value=""></option>
+                    {% for product in products %}
+                        <option value="{{ product.id }}" {{ filter["3"]["value"] is defined and filter["3"]["value"] == product.id ? "selected": "" }}>{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-2">
+                <input type="text" disabled class="form-control" value="Número da Fatura">
+                <input type="hidden" name="filter[4][path]" value="invoice.number">
+            </div>
+            <div class="col mb-2">
+                <select class="form-control" name="filter[4][comparator]">
+                    <option value="=" {{ filter["4"]["comparator"] is defined and filter["4"]["comparator"] == "=" ? "selected": "" }}>igual a</option>
+                    <option value="LIKE" {{ filter["4"]["comparator"] is defined and filter["4"]["comparator"] == "LIKE" ? "selected": "" }}>contém</option>
+                </select>
+            </div>
+            <div class="col mb-2">
+                <input type="text" class="form-control" name="filter[4][value]" placeholder="Número da fatura" value="{{ filter["4"]["value"] is defined ? filter["4"]["value"] : "" }}">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col text-right">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -5,7 +5,9 @@ namespace App\Controller\Backend\Invoice;
 use App\Controller\Backend\BaseController;
 use App\Entity\Invoice\Invoice;
 use App\Form\Invoice\InvoiceType;
+use App\Repository\Company\CompanyRepository;
 use App\Repository\Invoice\InvoiceRepository;
+use App\Repository\Product\ProductRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,12 +22,15 @@ class InvoiceController extends BaseController {
     /**
      * @Route("/", name="backend_invoice_invoice_index", methods={"GET"})
      */
-    public function index(InvoiceRepository $invoiceRepository, Request $request): Response {
+    public function index(InvoiceRepository $invoiceRepository, ProductRepository $productRepository, CompanyRepository $companyRepository, Request $request): Response {
         $invoices = $this->paginateWithSorting($invoiceRepository, $request);
         /** @var $invoices Invoice[]|Pagerfanta */
 
+
         return $this->render('backend/invoice/invoice/index.html.twig', [
-            'invoices' => $invoices
+            'invoices' => $invoices,
+            'products' => $productRepository->findAll(),
+            'companies' => $companyRepository->findAll(),
         ]);
     }
 
