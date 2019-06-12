@@ -51,6 +51,7 @@
             </div>
             <div class="col mb-2">
                 <select class="form-control" name="filter[2][comparator]">
+                    <option value="LIKE" {{ filter["2"]["comparator"] is defined and filter["2"]["comparator"] == "LIKE" ? "selected": "" }}>contém</option>
                     <option value="=" {{ filter["2"]["comparator"] is defined and filter["2"]["comparator"] == "=" ? "selected": "" }}>igual a</option>
                     <option value="!=" {{ filter["2"]["comparator"] is defined and filter["2"]["comparator"] == "!=" ? "selected": "" }}>diferente de</option>
                 </select>
