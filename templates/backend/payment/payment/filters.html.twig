@@ -61,6 +61,23 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col mb-2">
+                <input type="text" disabled class="form-control" value="Data do Pagamento">
+                <input type="hidden" name="filter[5][path]" value="date">
+            </div>
+            <div class="col mb-2">
+                <select class="form-control" name="filter[5][comparator]">
+                    <option value="=" {{ filter["5"]["comparator"] is defined and filter["5"]["comparator"] == "=" ? "selected": "" }}>igual a</option>
+                    <option value=">" {{ filter["5"]["comparator"] is defined and filter["5"]["comparator"] == ">" ? "selected": "" }}>depois de</option>
+                    <option value="<" {{ filter["5"]["comparator"] is defined and filter["5"]["comparator"] == "<" ? "selected": "" }}>antes de</option>
+                </select>
+            </div>
+            <div class="col mb-2">
+                <input type="date" class="form-control" name="filter[5][value]" value="{{ filter["5"]["value"] is defined ? filter["5"]["value"] : "" }}">
+            </div>
+        </div>
+
 
         <div class="row">
             <div class="col mb-2">
@@ -98,6 +115,10 @@
 
         <div class="row">
             <div class="col text-right">
+                {% if filter is not empty %}
+                    <a href="?" class="btn btn-secondary"><i class="fa fa-broom"></i> Limpar</a>
+                {% endif %}
+
                 <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
             </div>
         </div>
