@@ -37,9 +37,9 @@
                                                 with {company: item.invoice.client} %}{% endembed %}</td>
                                         <td>{% embed 'backend/component/identifier/product.html.twig'
                                                 with {product: item.product} %}{% endembed %}</td>
-                                        <td>{{ item.quantity|number_format(2, ".", ".") }}{{ item.product.unit }}</td>
-                                        <td>{{ item.pricePerUnit|number_format(2, ".", ".") }}€</td>
-                                        <td>{{ item.waste|number_format(2, ".", ".") }}{{ item.product.unit }}</td>
+                                        <td>{{ item.quantity|number_format(2, ",", ".") }}{{ item.product.unit }}</td>
+                                        <td>{{ item.pricePerUnit|number_format(2, ",", ".") }}€</td>
+                                        <td>{{ item.waste|number_format(2, ",", ".") }}{{ item.product.unit }}</td>
                                         <td>{{ item.invoice.date|date("d-m-Y") }}</td>
                                         <td>{% embed 'backend/component/identifier/invoice.html.twig'
                                                 with {invoice: item.invoice} %}{% endembed %}</td>

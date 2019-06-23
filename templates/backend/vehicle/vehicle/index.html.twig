@@ -27,7 +27,7 @@
                                         <td>{% embed 'backend/component/identifier/vehicle.html.twig'
                                                 with {vehicle: vehicle} %}{% endembed %}</td>
                                         <td>{{ vehicle.plate }}</td>
-                                        <td>{{ vehicle.year }}€</td>
+                                        <td>{{ vehicle.year }}</td>
                                         <td>
                                             <a href="{{ path('backend_vehicle_vehicle_edit', {'id': vehicle.id}) }}"
                                                class="btn btn-info btn-icon-split">
