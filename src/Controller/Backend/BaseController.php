@@ -40,8 +40,8 @@ class BaseController extends AbstractController {
     }
 
     protected function paginateWithSorting(BaseRepository $repository, Request $request, string $name = ''): PaginationInterface {
-        $orderProperty = $request->get('sort-by');
-        $order = $request->get('sort-order');
+        $orderProperty = $request->get('sort-by'); // Property to sort by
+        $order = $request->get('sort-order'); // Order either asc or desc
 
         $filterCollection = new FilterCollection();
 
@@ -50,7 +50,7 @@ class BaseController extends AbstractController {
 
             if (is_array($filters)) {
                 foreach ($filters as $filter) {
-                    if (!isset($filter['path'], $filter["comparator"], $filter["value"]) || $filter['value'] == "") {
+                    if (!isset($filter['path'], $filter['comparator'], $filter['value']) || $filter['value'] === '') {
                         continue; //ignore filter
                     }
 

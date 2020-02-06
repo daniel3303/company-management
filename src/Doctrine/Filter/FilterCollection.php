@@ -26,7 +26,7 @@ class FilterCollection implements FilterInterface {
         $this->filters->append($filter);
     }
 
-    public function filterQuery(QueryBuilder $queryBuilder, string $rootAlias, string $prefix = ""){
+    public function filterQuery(QueryBuilder $queryBuilder, string $rootAlias, string $prefix = ''){
         $index = 0;
 
         foreach ($this->filters as $filter){
