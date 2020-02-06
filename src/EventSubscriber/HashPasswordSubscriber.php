@@ -6,7 +6,7 @@
  * Time: 23:26
  */
 
-namespace App\Doctrine;
+namespace App\EventSubscriber;
 
 
 use App\Entity\User;
@@ -14,7 +14,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class HashPasswordListener implements EventSubscriber{
+class HashPasswordSubscriber implements EventSubscriber{
 
     /**
      * @var UserPasswordEncoderInterface

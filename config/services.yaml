@@ -28,7 +28,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     app.doctrine.hash_password_listener:
-        class: App\Doctrine\HashPasswordListener
+        class: App\EventSubscriber\HashPasswordSubscriber
         tags:
             - {name: doctrine.event_subscriber}
 
