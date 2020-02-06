@@ -3,6 +3,7 @@
 namespace App\Controller\Backend;
 
 use App\Entity\Company\Company;
+use App\Entity\User;
 use App\Repository\Company\CompanyRepository;
 use App\Repository\Company\ManagedCompanyRepository;
 use App\Repository\Invoice\InvoiceRepository;
@@ -23,7 +24,11 @@ class DashboardController extends BaseController {
     public function index(ManagedCompanyRepository $managedCompanyRepository, CompanyRepository $companyRepository, InvoiceRepository $invoiceRepository,
                           ProductRepository $productRepository, PaymentRepository $paymentRepository,
                           Request $request) {
-        $numCompanies = $companyRepository->countAllCompanies($this->getUser());
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        $numCompanies = $companyRepository->countAllCompanies($user);
         $numInvoices = $invoiceRepository->countAllInvoices();
         $numProducts = $productRepository->countAllProducts();
         $numPayments = $paymentRepository->countAllPayments();

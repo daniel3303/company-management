@@ -10,7 +10,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Listagem de faturas</h6>
                 </div>
                 <div class="card-body">
-                    {% embed 'backend/component/pagination/header.html.twig' with {paginator: invoices, filters: true} %}{% endembed %}
+                    {% embed 'backend/component/pagination/header.html.twig' with {pagination: invoices, filters: true} %}{% endembed %}
                     {{ include('backend/invoice/invoice/filters.html.twig') }}
 
 
@@ -70,7 +70,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                        {% embed 'backend/component/pagination/footer.html.twig' with {paginator: invoices} %}{% endembed %}
+                        {% embed 'backend/component/pagination/footer.html.twig' with {pagination: invoices} %}{% endembed %}
                     </div>
                 </div>
 

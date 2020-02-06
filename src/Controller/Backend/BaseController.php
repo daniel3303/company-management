@@ -23,7 +23,7 @@ class BaseController extends AbstractController {
     const DEFAULT_PER_PAGE = 10;
 
     /**
-     * @var PaginationInterface
+     * @var PaginatorInterface
      */
     protected $paginator;
 
@@ -32,13 +32,11 @@ class BaseController extends AbstractController {
     }
 
     protected function paginate(Query $query, Request $request, string $name = ''): PaginationInterface {
-        $pagination = $this->paginator->paginate(
+        return $this->paginator->paginate(
             $query,
             $request->query->getInt($name . 'page', 1),
             $request->getSession()->get($name . 'per-page') ?? static::DEFAULT_PER_PAGE
         );
-
-        return $pagination;
     }
 
     protected function paginateWithSorting(BaseRepository $repository, Request $request, string $name = ''): PaginationInterface {

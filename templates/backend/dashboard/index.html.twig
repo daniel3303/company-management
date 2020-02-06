@@ -104,7 +104,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    {% embed 'backend/component/pagination/footer.html.twig' with {paginator: myCompanies} %}{% endembed %}
+                    {% embed 'backend/component/pagination/footer.html.twig' with {pagination: myCompanies} %}{% endembed %}
                     {% else %}
                         <h6 class="text-center"><a href="{{ path('backend_company_managed_company_new') }}">Crie a sua primeira empresa!</a></h6>
                     {% endif %}

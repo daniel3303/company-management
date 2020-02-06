@@ -13,8 +13,8 @@
 
     <div class="right d-flex">
         <div class="total-records">
-            {% if paginator is not empty %}
-                <p class="text-right">Foram encontrados <strong>{{ paginator.count }}</strong> resultados na base de dados.</p>
+            {% if pagination is not empty %}
+                <p class="text-right">Foram encontrados <strong>{{ pagination.count }}</strong> resultados na base de dados.</p>
             {% else %}
                 <p class="text-right">Não foram encontrados resultados.</p>
             {% endif %}
