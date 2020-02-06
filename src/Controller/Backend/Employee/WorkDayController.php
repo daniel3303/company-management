@@ -34,7 +34,7 @@ class WorkDayController extends BaseController {
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($workDay);
-            $eventDispatcher->dispatch(WorkDayCreatedEvent::NAME, new WorkDayCreatedEvent($workDay));
+            $eventDispatcher->dispatch( new WorkDayCreatedEvent($workDay));
             $entityManager->flush();
 
             return $this->redirectToRoute('backend_employee_employee_show', ['id' => $workDay->getEmployee()->getId()]);
@@ -54,7 +54,7 @@ class WorkDayController extends BaseController {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventDispatcher->dispatch(WorkDayUpdatedEvent::NAME, new WorkDayUpdatedEvent($workDay));
+            $eventDispatcher->dispatch(new WorkDayUpdatedEvent($workDay));
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('backend_employee_employee_show', [

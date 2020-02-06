@@ -2,15 +2,13 @@
 
 namespace App\Repository\Company;
 
-use App\Doctrine\Filter\Filter;
-use App\Doctrine\Filter\FilterCollection;
 use App\Entity\Company\Company;
 use App\Entity\User;
 use App\Repository\BaseRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Company|null         find($id, $lockMode = null, $lockVersion = null)
@@ -20,7 +18,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Company[]|Paginator  findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
  */
 class CompanyRepository extends BaseRepository {
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Company::class);
     }
 
@@ -34,7 +32,9 @@ class CompanyRepository extends BaseRepository {
                 ->getSingleScalarResult();
         } catch (NonUniqueResultException $e) {
             return 0;
+        } catch (NoResultException $e) {
+            return 0;
         }
-        return $count === null ? 0 : $count;
+        return $count ?? 0;
     }
 }

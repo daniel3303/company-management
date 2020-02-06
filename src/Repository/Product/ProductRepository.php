@@ -4,10 +4,10 @@ namespace App\Repository\Product;
 
 use App\Entity\Product\Product;
 use App\Repository\BaseRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Product[]|Paginator  findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
  */
 class ProductRepository extends BaseRepository {
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Product::class);
     }
 
@@ -29,8 +29,10 @@ class ProductRepository extends BaseRepository {
                 ->getSingleScalarResult();
         } catch (NonUniqueResultException $e) {
             return 0;
+        } catch (NoResultException $e) {
+            return 0;
         }
-        return $count === null ? 0 : $count;
+        return $count ?? 0;
     }
 
 }

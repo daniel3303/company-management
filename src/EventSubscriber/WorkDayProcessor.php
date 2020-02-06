@@ -30,8 +30,8 @@ class WorkDayProcessor implements EventSubscriberInterface {
 
     public static function getSubscribedEvents() {
         return [
-            WorkDayCreatedEvent::NAME => 'onWorkDayCreated',
-            WorkDayUpdatedEvent::NAME => 'onWorkDayUpdated',
+            WorkDayCreatedEvent::class => 'onWorkDayCreated',
+            WorkDayUpdatedEvent::class => 'onWorkDayUpdated',
         ];
     }
 

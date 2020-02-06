@@ -4,9 +4,8 @@ namespace App\Repository\Company;
 
 use App\Entity\Company\ManagedCompany;
 use App\Repository\BaseRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ManagedCompany|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,7 +16,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ManagedCompanyRepository extends BaseRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ManagedCompany::class);
     }

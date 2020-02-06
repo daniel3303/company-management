@@ -2,13 +2,12 @@
 
 namespace App\Repository\Payment;
 
-use App\Entity\Invoice\Invoice;
 use App\Entity\Payment\Payment;
 use App\Repository\BaseRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Payment|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,7 +17,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Payment[]|Paginator  findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
  */
 class PaymentRepository extends BaseRepository {
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Payment::class);
     }
 
@@ -30,7 +29,9 @@ class PaymentRepository extends BaseRepository {
                 ->getSingleScalarResult();
         } catch (NonUniqueResultException $e) {
             return 0;
+        } catch (NoResultException $e) {
+            return 0;
         }
-        return $count === null ? 0 : $count;
+        return $count ?? 0;
     }
 }

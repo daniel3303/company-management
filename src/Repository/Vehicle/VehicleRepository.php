@@ -4,8 +4,7 @@ namespace App\Repository\Vehicle;
 
 use App\Entity\Vehicle\Vehicle;
 use App\Repository\BaseRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Vehicle|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class VehicleRepository extends BaseRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Vehicle::class);
     }

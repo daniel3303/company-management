@@ -2,14 +2,12 @@
 
 namespace App\Repository\Invoice;
 
-use App\Entity\Company\Company;
 use App\Entity\Invoice\Invoice;
 use App\Repository\BaseRepository;
-use App\Repository\DynamicListRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Invoice|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,7 +17,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Invoice[]|Paginator  findAllWithPaginator(?string $orderProperty = null, ?string $order = 'asc', ?array $allowedSortProperties = null)
  */
 class InvoiceRepository extends BaseRepository {
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Invoice::class);
     }
 
@@ -33,7 +31,9 @@ class InvoiceRepository extends BaseRepository {
                 ->getSingleScalarResult();
         } catch (NonUniqueResultException $e) {
             return 0;
+        } catch (NoResultException $e) {
+            return 0;
         }
-        return $count === null ? 0 : $count;
+        return $count ?? 0;
     }
 }

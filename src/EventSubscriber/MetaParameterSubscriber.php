@@ -9,7 +9,7 @@
 namespace App\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -22,7 +22,7 @@ class MetaParameterSubscriber implements EventSubscriberInterface {
     public function __construct() {
     }
 
-    public function onKernelController(FilterControllerEvent $event){
+    public function onKernelController(ControllerEvent $event){
         $request = $event->getRequest();
         if($request->query->has('per-page')){
             $perPage = max($request->query->getInt('per-page', 0), 10);

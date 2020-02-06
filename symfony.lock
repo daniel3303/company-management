@@ -2,6 +2,9 @@
     "beberlei/doctrineextensions": {
         "version": "v1.1.5"
     },
+    "brick/math": {
+        "version": "0.8.12"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -35,9 +38,6 @@
             "ref": "453e89b78ded666f351617baca5ae40d20622351"
         }
     },
-    "doctrine/doctrine-cache-bundle": {
-        "version": "1.3.5"
-    },
     "doctrine/doctrine-fixtures-bundle": {
         "version": "3.0",
         "recipe": {
@@ -45,15 +45,6 @@
             "branch": "master",
             "version": "3.0",
             "ref": "fc52d86631a6dfd9fdf3381d0b7e3df2069e51b3"
-        }
-    },
-    "doctrine/doctrine-migrations-bundle": {
-        "version": "1.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.2",
-            "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
         }
     },
     "doctrine/event-manager": {
@@ -67,9 +58,6 @@
     },
     "doctrine/lexer": {
         "version": "v1.0.1"
-    },
-    "doctrine/migrations": {
-        "version": "v1.8.1"
     },
     "doctrine/orm": {
         "version": "v2.6.3"
@@ -89,14 +77,8 @@
             "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
         }
     },
-    "egulias/email-validator": {
-        "version": "2.1.7"
-    },
     "facebook/webdriver": {
         "version": "1.6.0"
-    },
-    "fig/link-util": {
-        "version": "1.0.0"
     },
     "fzaninotto/faker": {
         "version": "v1.8.0"
@@ -158,41 +140,11 @@
             "ref": "384cec52df45f3bfd46a09930d6960a58872b268"
         }
     },
-    "laminas/laminas-code": {
-        "version": "3.4.1"
-    },
-    "laminas/laminas-eventmanager": {
-        "version": "3.2.1"
-    },
-    "laminas/laminas-zendframework-bridge": {
-        "version": "1.0.1"
-    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
-    "moontoast/math": {
-        "version": "1.1.2"
-    },
-    "nelmio/cors-bundle": {
-        "version": "1.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.5",
-            "ref": "f0436fc35fca88eada758311f8de43bfb61f1980"
-        }
-    },
     "nikic/php-parser": {
         "version": "v4.1.0"
-    },
-    "ocramius/package-versions": {
-        "version": "1.5.1"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.1.1"
-    },
-    "pagerfanta/pagerfanta": {
-        "version": "v2.1.2"
     },
     "php": {
         "version": "7.4"
@@ -206,16 +158,13 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
-    "phpseclib/bcmath_compat": {
-        "version": "1.0.4"
-    },
-    "phpseclib/phpseclib": {
-        "version": "2.0.23"
-    },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
+        "version": "1.0.0"
+    },
+    "psr/event-dispatcher": {
         "version": "1.0.0"
     },
     "psr/link": {
@@ -223,9 +172,6 @@
     },
     "psr/log": {
         "version": "1.1.0"
-    },
-    "psr/simple-cache": {
-        "version": "1.0.1"
     },
     "ramsey/uuid": {
         "version": "3.8.0"
@@ -238,9 +184,6 @@
             "version": "5.2",
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         }
-    },
-    "swiftmailer/swiftmailer": {
-        "version": "v6.1.3"
     },
     "symfony/apache-pack": {
         "version": "1.0",
@@ -263,6 +206,9 @@
     "symfony/cache": {
         "version": "v4.2.1"
     },
+    "symfony/cache-contracts": {
+        "version": "v2.0.1"
+    },
     "symfony/config": {
         "version": "v4.2.1"
     },
@@ -275,13 +221,7 @@
             "ref": "f3a28efb32f20b8740fd763651cabd780bce43da"
         }
     },
-    "symfony/contracts": {
-        "version": "v1.0.2"
-    },
     "symfony/css-selector": {
-        "version": "v4.2.1"
-    },
-    "symfony/debug": {
         "version": "v4.2.1"
     },
     "symfony/debug-bundle": {
@@ -308,8 +248,14 @@
     "symfony/dotenv": {
         "version": "v4.2.1"
     },
+    "symfony/error-handler": {
+        "version": "v5.0.4"
+    },
     "symfony/event-dispatcher": {
         "version": "v4.2.1"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v2.0.1"
     },
     "symfony/expression-language": {
         "version": "v4.2.1"
@@ -362,6 +308,9 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/mime": {
+        "version": "v5.0.4"
+    },
     "symfony/monolog-bridge": {
         "version": "v4.2.1"
     },
@@ -376,9 +325,6 @@
     },
     "symfony/options-resolver": {
         "version": "v4.2.1"
-    },
-    "symfony/orm-pack": {
-        "version": "v1.0.5"
     },
     "symfony/panther": {
         "version": "v0.2.0"
@@ -403,6 +349,9 @@
     },
     "symfony/polyfill-php72": {
         "version": "v1.10.0"
+    },
+    "symfony/polyfill-php73": {
+        "version": "v1.13.1"
     },
     "symfony/process": {
         "version": "v4.2.1"
@@ -452,17 +401,11 @@
     "symfony/serializer-pack": {
         "version": "v1.0.1"
     },
+    "symfony/service-contracts": {
+        "version": "v2.0.1"
+    },
     "symfony/stopwatch": {
         "version": "v4.2.1"
-    },
-    "symfony/swiftmailer-bundle": {
-        "version": "2.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.5",
-            "ref": "3db029c03e452b4a23f7fc45cec7c922c2247eb8"
-        }
     },
     "symfony/test-pack": {
         "version": "v1.0.4"
@@ -475,6 +418,9 @@
             "version": "3.3",
             "ref": "1fb02a6e1c8f3d4232cce485c9afa868d63b115a"
         }
+    },
+    "symfony/translation-contracts": {
+        "version": "v2.0.1"
     },
     "symfony/twig-bridge": {
         "version": "v4.2.1"
@@ -560,14 +506,8 @@
     "twig/twig": {
         "version": "v2.5.0"
     },
-    "webimpress/safe-writer": {
-        "version": "2.0.0"
-    },
     "webmozart/assert": {
         "version": "1.3.0"
-    },
-    "white-october/pagerfanta-bundle": {
-        "version": "v1.2.4"
     },
     "zendframework/zend-code": {
         "version": "3.3.1"

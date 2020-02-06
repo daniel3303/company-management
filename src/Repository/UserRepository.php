@@ -3,8 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -21,10 +20,10 @@ class UserRepository extends BaseRepository {
 
     /**
      * UserRepository constructor.
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function __construct(RegistryInterface $registry, UserPasswordEncoderInterface $encoder) {
+    public function __construct(ManagerRegistry $registry, UserPasswordEncoderInterface $encoder) {
         parent::__construct($registry, User::class);
         $this->passwordEncoder = $encoder;
     }
@@ -42,9 +41,9 @@ class UserRepository extends BaseRepository {
 
         if($this->passwordEncoder->isPasswordValid($user, $password) === true){
             return $user;
-        }else{
-            return null;
         }
+
+        return null;
     }
 
     // /**

@@ -11,12 +11,11 @@ namespace App\Repository;
 
 use App\Doctrine\Filter\FilterInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 abstract class BaseRepository extends ServiceEntityRepository{
-    public function __construct(RegistryInterface $registry, $entityClass) {
+    public function __construct(ManagerRegistry $registry, $entityClass) {
         parent::__construct($registry, $entityClass);
     }
 
@@ -25,27 +24,27 @@ abstract class BaseRepository extends ServiceEntityRepository{
         $validProperty = false;
 
         //Check the order is valid. If not assigns asc by default
-        if(in_array(strtolower($order), ["asc", "desc"]) === false){
-            $order = "asc";
+        if(in_array(strtolower($order), ['asc', 'desc']) === false){
+            $order = 'asc';
         }
 
         //Check if the order property exists and is allowed
         $metadata = $this->getClassMetadata();
         if($metadata->hasField($orderProperty) === true
-            && ($allowedSortProperties === null || $allowedSortProperties !== null && in_array($orderProperty, $allowedSortProperties) === true)){
+            && ($allowedSortProperties === null || ($allowedSortProperties !== null && in_array($orderProperty, $allowedSortProperties, true) === true))){
             $validProperty = true;
         }
 
-        $query = $this->createQueryBuilder("o")->select("o");
+        $query = $this->createQueryBuilder('o')->select('o');
 
         // if a filter or filter collection is provided
         if($filter !== null){
-            $filter->filterQuery($query, "o");
+            $filter->filterQuery($query, 'o');
         }
 
         // set the ordering
         if($validProperty){
-            $query = $query->orderBy("o.".$orderProperty, $order);
+            $query = $query->orderBy('o.' .$orderProperty, $order);
         }
 
         return new Paginator($query);

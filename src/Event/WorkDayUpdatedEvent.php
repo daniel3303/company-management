@@ -3,11 +3,9 @@
 namespace App\Event;
 
 use App\Entity\Employee\WorkDay;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class WorkDayUpdatedEvent extends Event {
-    public const NAME = 'workday.updated';
-
     /**
      * @var WorkDay 
      */
