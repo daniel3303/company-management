@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         {% embed 'backend/component/pagination/header.html.twig' with {pagination: companies} %}{% endembed %}
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="dataTable">
                             <thead>
                                 <tr>
                                     <th>{% embed 'backend/component/pagination/ordered_property.html.twig' with {text: "Nome", property: "name"} %}{% endembed %}</th>
