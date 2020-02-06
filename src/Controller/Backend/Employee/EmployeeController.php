@@ -6,8 +6,7 @@ use App\Controller\Backend\BaseController;
 use App\Entity\Employee\Employee;
 use App\Form\Employee\EmployeeType;
 use App\Repository\Employee\EmployeeRepository;
-use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +20,7 @@ class EmployeeController extends BaseController {
      */
     public function index(EmployeeRepository $employeeRepository, Request $request): Response {
         $employees = $this->paginateWithSorting($employeeRepository, $request);
-        /** @var $invoices Employee[]|Pagerfanta */
+        /** @var $invoices Employee[]|PaginatorInterface */
 
         return $this->render('backend/employee/employee/index.html.twig', [
             'employees' => $employees,

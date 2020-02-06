@@ -1,5 +1,6 @@
-{% if paginator is not empty and paginator.nbPages > 1 %}
+{# @var paginator \Knp\Component\Pager\Pagination\PaginationInterface #}
+{% if paginator is not empty %}
     <div class="d-flex justify-content-center">
-        {{ pagerfanta(paginator, 'twitter_bootstrap4_translated') }}
+        {{ knp_pagination_render(paginator) }}
     </div>
 {% endif %}

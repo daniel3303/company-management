@@ -6,7 +6,7 @@ use App\Controller\Backend\BaseController;
 use App\Entity\Vehicle\Vehicle;
 use App\Form\Vehicle\VehicleType;
 use App\Repository\Vehicle\VehicleRepository;
-use Pagerfanta\Pagerfanta;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +21,7 @@ class VehicleController extends BaseController
      */
     public function index(VehicleRepository $vehicleRepository, Request $request): Response {
         $vehicles = $this->paginateWithSorting($vehicleRepository, $request);
-        /** @var $vehicles Vehicle[]|Pagerfanta */
+        /** @var $vehicles Vehicle[]|PaginationInterface */
 
         return $this->render('backend/vehicle/vehicle/index.html.twig', [
             'vehicles' => $vehicles,

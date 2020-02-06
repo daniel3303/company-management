@@ -3,15 +3,12 @@
 namespace App\Controller\Backend;
 
 use App\Entity\Company\Company;
-use App\Entity\User;
 use App\Repository\Company\CompanyRepository;
 use App\Repository\Company\ManagedCompanyRepository;
 use App\Repository\Invoice\InvoiceRepository;
 use App\Repository\Payment\PaymentRepository;
 use App\Repository\Product\ProductRepository;
-use Knp\Component\Pager\PaginatorInterface;
-use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -33,7 +30,7 @@ class DashboardController extends BaseController {
 
         $myCompanies = $managedCompanyRepository->findAllWithPaginator('name', 'asc')->getQuery();
         $myCompanies = $this->paginate($myCompanies, $request);
-        /** @var $myCompanies Company[]|Pagerfanta*/
+        /** @var $myCompanies Company[]|PaginationInterface*/
 
 
         return $this->render('backend/dashboard/index.html.twig', [

@@ -3,14 +3,11 @@
 namespace App\Controller\Backend\Company;
 
 use App\Controller\Backend\BaseController;
-use App\Doctrine\Filter\FilterCollection;
 use App\Entity\Company\Company;
 use App\Entity\User;
 use App\Form\Company\CompanyType;
 use App\Repository\Company\CompanyRepository;
-use Doctrine\ORM\Query\Expr\Base;
-use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +20,7 @@ class CompanyController extends BaseController {
      * @Route("/", name="backend_company_company_index", methods={"GET"})
      */
     public function index(CompanyRepository $companyRepository, Request $request): Response {
-        /** @var $companies Company[]|Pagerfanta */
+        /** @var $companies Company[]|PaginationInterface */
         $companies = $this->paginateWithSorting($companyRepository, $request);
 
         return $this->render('backend/company/company/index.html.twig', [
@@ -35,10 +32,14 @@ class CompanyController extends BaseController {
      * @Route("/new", name="backend_company_company_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
         $company = new Company();
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
-        $company->setUser($this->getUser());
+        $company->setUser($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */

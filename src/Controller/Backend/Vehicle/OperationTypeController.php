@@ -6,7 +6,8 @@ use App\Controller\Backend\BaseController;
 use App\Entity\Vehicle\OperationType;
 use App\Form\Vehicle\OperationTypeType;
 use App\Repository\Vehicle\OperationTypeRepository;
-use Pagerfanta\Pagerfanta;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class OperationTypeController extends BaseController
      */
     public function index(OperationTypeRepository $operationTypeRepository, Request $request): Response {
         $operationTypes = $this->paginateWithSorting($operationTypeRepository, $request);
-        /** @var $operationTypes OperationType[]|Pagerfanta */
+        /** @var $operationTypes OperationType[]|PaginationInterface */
 
         return $this->render('backend/vehicle/operation_type/index.html.twig', [
             'operationTypes' => $operationTypes,

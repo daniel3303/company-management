@@ -9,7 +9,7 @@ use App\Repository\Company\CompanyRepository;
 use App\Repository\Invoice\InvoiceRepository;
 use App\Repository\Product\ProductRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
-use Pagerfanta\Pagerfanta;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +24,7 @@ class InvoiceController extends BaseController {
      */
     public function index(InvoiceRepository $invoiceRepository, ProductRepository $productRepository, CompanyRepository $companyRepository, Request $request): Response {
         $invoices = $this->paginateWithSorting($invoiceRepository, $request);
-        /** @var $invoices Invoice[]|Pagerfanta */
+        /** @var $invoices Invoice[]|PaginatorInterface */
 
 
         return $this->render('backend/invoice/invoice/index.html.twig', [

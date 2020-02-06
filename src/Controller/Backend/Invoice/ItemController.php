@@ -3,16 +3,11 @@
 namespace App\Controller\Backend\Invoice;
 
 use App\Controller\Backend\BaseController;
-use App\Entity\Invoice\Invoice;
 use App\Entity\Invoice\Item;
-use App\Form\Invoice\InvoiceType;
 use App\Repository\Company\CompanyRepository;
-use App\Repository\Invoice\InvoiceRepository;
 use App\Repository\Invoice\ItemRepository;
 use App\Repository\Product\ProductRepository;
-use Knp\Component\Pager\Pagination\PaginationInterface;
-use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +21,7 @@ class ItemController extends BaseController {
      */
     public function index(ItemRepository $itemRepository, ProductRepository $productRepository, CompanyRepository $companyRepository, Request $request): Response {
         $items = $this->paginateWithSorting($itemRepository, $request);
-        /** @var $items Item[]|Pagerfanta */
+        /** @var $items Item[]|PaginatorInterface */
 
 
         return $this->render('backend/invoice/item/index.html.twig', [

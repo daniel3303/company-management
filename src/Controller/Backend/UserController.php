@@ -27,7 +27,7 @@ class UserController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash("success", "A sua password foi alterada com sucesso.");
+            $this->addFlash("success", 'A sua password foi alterada com sucesso.');
             $changePasswordModel->update($user);
 
             $this->getDoctrine()->getManager()->flush();
