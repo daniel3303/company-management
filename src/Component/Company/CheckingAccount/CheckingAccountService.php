@@ -30,7 +30,7 @@ class CheckingAccountService {
         // Invoices
         $balance = 0.0;
         foreach ($invoices as $invoice) {
-            $balance -= $invoice->getTotal();
+            $balance += $invoice->getTotal();
             $item = new CheckingAccountItem(
                 $invoice->getDate(),
                 CheckingAccountItem::TYPE_INVOICE,
@@ -41,7 +41,7 @@ class CheckingAccountService {
 
             // Payments
             foreach ($invoice->getPayments() as $payment) {
-                $balance += $payment->getAmount();
+                $balance -= $payment->getAmount();
                 $item = new CheckingAccountItem(
                     $payment->getDate(),
                     CheckingAccountItem::TYPE_RECEIPT,
