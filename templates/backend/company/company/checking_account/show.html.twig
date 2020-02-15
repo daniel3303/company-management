@@ -1,0 +1,78 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}Conta corrente para {{ checkingAccount.client.name }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        Conta corrente da empresa {{ checkingAccount.issuer.name }} para o cliente {{ checkingAccount.client.name }}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Data</th>
+                                            <th>Tipo de Documento</th>
+                                            <th>Documento</th>
+                                            <th>Débito</th>
+                                            <th>Crédito</th>
+                                            <th>Saldo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {# @var item \App\Component\Company\CheckingAccount\CheckingAccountItem #}
+                                        {% for item in checkingAccount.items %}
+                                            <tr>
+                                                <td>{{ item.date|date("d-m-Y") }}</td>
+                                                <td>{{ item.documentType|trans }}</td>
+                                                <td>
+                                                    {% if item.documentType == constant("App\\Component\\Company\\CheckingAccount\\CheckingAccountItem::TYPE_INVOICE") %}
+                                                        {% embed 'backend/component/identifier/invoice.html.twig' with {'invoice': item.document} %}{% endembed %}
+                                                    {% elseif item.documentType == constant("App\\Component\\Company\\CheckingAccount\\CheckingAccountItem::TYPE_RECEIPT") %}
+                                                        Pagamento por {{ item.document.method }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ item.debit|number_format(2, ',', '.') }}€</td>
+                                                <td>{{ item.credit|number_format(2, ',', '.') }}€</td>
+                                                <td>{{ item.balance|number_format(2, ',', '.') }}€</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Data</th>
+                                            <th>Tipo de Documento</th>
+                                            <th>Documento</th>
+                                            <th>Débito</th>
+                                            <th>Crédito</th>
+                                            <th>Saldo</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('backend_company_company_checking_account_index', {'company': checkingAccount.issuer.id}) }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

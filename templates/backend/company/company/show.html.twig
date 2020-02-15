@@ -18,7 +18,7 @@
                                 <strong>Nome da empresa: </strong>{{ company.name }}<br />
                                 <strong>Nif: </strong>{{ company.nif }}<br />
                                 <strong>Morada: </strong>{{ company.address }}<br />
-                                <strong>Criado por: </strong>{{ company.user.name }}<br />
+                                <strong>Conta corrente: </strong><a href="{{ path('backend_company_company_checking_account_index', {'company': company.id}) }}">Abrir</a> <br />
                             </p>
                         </div>
                     </div>

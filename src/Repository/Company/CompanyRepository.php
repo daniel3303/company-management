@@ -22,12 +22,10 @@ class CompanyRepository extends BaseRepository {
         parent::__construct($registry, Company::class);
     }
 
-    public function countAllCompanies(User $user) : int {
+    public function countAllCompanies(): int {
         try {
-            $count = $this->createQueryBuilder("c")
-                ->select("COUNT(c)")
-                ->where("c.user = :user")
-                ->setParameter("user", $user)
+            $count = $this->createQueryBuilder('c')
+                ->select('COUNT(c)')
                 ->getQuery()
                 ->getSingleScalarResult();
         } catch (NonUniqueResultException $e) {
@@ -36,5 +34,18 @@ class CompanyRepository extends BaseRepository {
             return 0;
         }
         return $count ?? 0;
+    }
+
+    /**
+     * @param Company $company
+     * @return Paginator|Company[]
+     */
+    public function findClientsOf(Company $issuer): Paginator {
+        return new Paginator(
+            $this->createQueryBuilder('client')
+            ->select('client')
+            ->innerJoin('client.receivedInvoices', 'receivedInvoices')
+            ->where('receivedInvoices.issuer = :issuer')->setParameter('issuer', $issuer)->getQuery()
+        );
     }
 }

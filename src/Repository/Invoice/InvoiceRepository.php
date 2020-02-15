@@ -2,6 +2,7 @@
 
 namespace App\Repository\Invoice;
 
+use App\Entity\Company\Company;
 use App\Entity\Invoice\Invoice;
 use App\Repository\BaseRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -21,12 +22,10 @@ class InvoiceRepository extends BaseRepository {
         parent::__construct($registry, Invoice::class);
     }
 
-
-
     public function countAllInvoices() : int {
         try {
             $count = $this->createQueryBuilder("i")
-                ->select("COUNT(i)")
+                ->select('COUNT(i)')
                 ->getQuery()
                 ->getSingleScalarResult();
         } catch (NonUniqueResultException $e) {
@@ -35,5 +34,18 @@ class InvoiceRepository extends BaseRepository {
             return 0;
         }
         return $count ?? 0;
+    }
+
+    /**
+     * @param Company|null $issuer
+     * @param Company|null $client
+     * @return Paginator|Invoice[]
+     */
+    public function findInvoicesIssuedByTo(?Company $issuer, ?Company $client): Paginator{
+        return new Paginator($this->createQueryBuilder('i')
+            ->select('i')->where('i.issuer = :issuer')
+            ->andWhere('i.client = :client')
+            ->setParameter('issuer', $issuer)->setParameter('client', $client)
+            ->orderBy('i.date', 'ASC')->getQuery());
     }
 }

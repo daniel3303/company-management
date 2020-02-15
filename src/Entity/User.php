@@ -43,19 +43,11 @@ class User implements UserInterface {
     private $plainPassword;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Company\Company", mappedBy="user")
-     * @ORM\OrderBy({"name" = "asc"})
-     */
-    private $companies;
-
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     public function __construct() {
-        $this->companies = new ArrayCollection();
     }
 
     public function getId(): ?int {
@@ -121,36 +113,8 @@ class User implements UserInterface {
     /**
      * @see UserInterface
      */
-    public function eraseCredentials() {
+    public function eraseCredentials() : void {
         $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection|Company[]
-     */
-    public function getCompanies(): Collection {
-        return $this->companies;
-    }
-
-    public function addCompany(Company $company): self {
-        if (!$this->companies->contains($company)) {
-            $this->companies[] = $company;
-            $company->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompany(Company $company): self {
-        if ($this->companies->contains($company)) {
-            $this->companies->removeElement($company);
-            // set the owning side to null (unless already changed)
-            if ($company->getUser() === $this) {
-                $company->setUser(null);
-            }
-        }
-
-        return $this;
     }
 
     public function __toString() {

@@ -24,11 +24,9 @@ class DashboardController extends BaseController {
     public function index(ManagedCompanyRepository $managedCompanyRepository, CompanyRepository $companyRepository, InvoiceRepository $invoiceRepository,
                           ProductRepository $productRepository, PaymentRepository $paymentRepository,
                           Request $request) {
-        /**
-         * @var User $user
-         */
-        $user = $this->getUser();
-        $numCompanies = $companyRepository->countAllCompanies($user);
+
+
+        $numCompanies = $companyRepository->countAllCompanies();
         $numInvoices = $invoiceRepository->countAllInvoices();
         $numProducts = $productRepository->countAllProducts();
         $numPayments = $paymentRepository->countAllPayments();

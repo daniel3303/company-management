@@ -20,8 +20,8 @@ use JMS\Serializer\Annotation as Serializer;
  * @UniqueEntity("nif", message="Já existe uma empresa com este nif.", errorPath="nif")
  */
 class Company {
-    public const COMPANY = "COMPANY";
-    public const MANAGED_COMPANY = "MANAGED_COMPANY";
+    public const COMPANY = 'COMPANY';
+    public const MANAGED_COMPANY = 'MANAGED_COMPANY';
 
     /**
      * @ORM\Id()
@@ -65,12 +65,6 @@ class Company {
      * @ORM\OrderBy({"number" = "asc"})
      */
     private $receivedInvoices;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="companies")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     public function __construct() {
         $this->issuedInvoices = new ArrayCollection();
@@ -142,16 +136,6 @@ class Company {
                 $invoice->setIssuer(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getUser(): ?User {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self {
-        $this->user = $user;
 
         return $this;
     }

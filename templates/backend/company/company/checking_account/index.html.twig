@@ -1,0 +1,28 @@
+{% extends 'backend/master.html.twig' %}
+
+{% block title %}Conta corrente para clientes de {{ company.name }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Empresa
+                        {% embed 'backend/component/identifier/company.html.twig' with {company: company} %}{% endembed %}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    {% embed 'backend/company/company/checking_account/_form.html.twig' with {'form': form} %}{% endembed %}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('backend_company_company_show', {'id': company.id}) }}" class="btn btn-secondary btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Voltar à lista</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
